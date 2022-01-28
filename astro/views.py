@@ -15,4 +15,4 @@ import datetime
 
 # Create your views here.
 def home(request):
-    return HttpResponse("DC")
+    return render(request, 'astro/home.html')

@@ -16,3 +16,6 @@ import datetime
 # Create your views here.
 def home(request):
     return render(request, 'astro/home.html')
+
+def about(request):
+    return render(request, 'astro/about.html')

@@ -19,3 +19,6 @@ def home(request):
 
 def about(request):
     return render(request, 'astro/about.html')
+
+def addevent(request):
+    return render(request, 'astro/addevents.html')

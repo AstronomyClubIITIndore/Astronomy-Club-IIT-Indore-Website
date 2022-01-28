@@ -7,5 +7,6 @@ from astro import views
 urlpatterns = [
     path('', views.home, name='home'), 
     path('about', views.about, name='home'), 
+    path('addevent', views.addevent, name='home'), 
 
 ]

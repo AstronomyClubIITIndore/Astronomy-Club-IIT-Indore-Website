@@ -1,3 +1,4 @@
+from venv import EnvBuilder
 from django.shortcuts import render
 from os import pipe
 from django import http
@@ -100,3 +101,26 @@ def showevent(request):
         
 
     return render(request, 'astro/event.html', evs)
+
+def eventDetail(request, eid):
+    event = Event.objects.filter(Event_id=eid).first()
+    urls = event.imgUrls
+    urrr = urls.split('$$')
+    urrr.pop()
+        
+
+    info = event.Info
+    inf = info.split('$$')
+    inf.pop()
+
+
+    high = event.Highlights
+    hig = high.split('$$')
+    hig.pop()
+
+
+
+
+
+    return render(request, 'astro/event_detail.html',{"Name":event.Name, "Disc":event.Discription,"imgs":urrr, "infs":inf, "higs":hig})
+

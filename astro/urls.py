@@ -10,5 +10,9 @@ urlpatterns = [
     path('addevent', views.addevent, name='addevent'), 
     path('showevent', views.showevent, name='showevent'),
     path('event<int:eid>', views.eventDetail, name='eventDetail'),
+    path('addblog', views.addblog, name='addblog'),
+    path('blog', views.blogs, name='blogs'),
+    path('readblog<int:bid>', views.readblog, name='readblog'),
+
 
 ]

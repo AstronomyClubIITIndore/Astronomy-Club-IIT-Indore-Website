@@ -1,4 +1,5 @@
 from venv import EnvBuilder
+from wsgiref.util import request_uri
 from django.shortcuts import render
 from os import pipe
 from django import http
@@ -12,7 +13,7 @@ from django.core.paginator import Paginator
 from django.contrib.auth.models import Group, User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
-from .models import Event
+from .models import Event, Blog
 import json
 import datetime
 
@@ -123,4 +124,47 @@ def eventDetail(request, eid):
 
 
     return render(request, 'astro/event_detail.html',{"Name":event.Name, "Disc":event.Discription,"imgs":urrr, "infs":inf, "higs":hig})
+
+def addblog(request):
+    if request.method == "POST":
+        T = request.POST.get("title")
+        D = request.POST.get("disc")
+        C = request.POST.get("content")
+        hi = request.POST.get("headimage")
+        blog = Blog(Title=T, headimg=hi, Discription=D,Content=C)
+        if T !="" and D !="" and C !="" and hi !="":
+            blog.save()
+            print("Save")
+
+    return render(request, 'astro/AddBlog.html')
+
+def blogs(request):
+
+    blogs = Blog.objects.all().order_by('Blog_id')
+    send =[]
+    for b in blogs:
+        oo ={
+            "Title":b.Title,
+            "id":b.Blog_id,
+            "disc":b.Discription,
+            "img":b.headimg
+        }
+        send.append(oo)
+
+    
+
+    return render(request, 'astro/blogs.html', {"bls":send})
+def readblog(request, bid):
+    b = Blog.objects.filter(Blog_id=bid).first()
+    oo ={
+            "Title":b.Title,
+            "id":b.Blog_id,
+            "disc":b.Discription,
+            "img":b.headimg,
+            "cnt":b.Content,
+        }
+
+    return render(request,'astro/Blog_detail.html',oo)
+
+
 

@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% block CSS %}
+
+
+   <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+       <script>
+      tinymce.init({
+        selector: '#exampleFormControlTextarea1',
+        height:400,
+          plugins: [
+      'advlist autolink link image lists charmap print preview hr anchor pagebreak',
+      'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
+      'table emoticons template paste help'
+    ],
+    toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | ' +
+      'bullist numlist outdent indent | link image | print preview media fullpage | ' +
+      'forecolor backcolor emoticons | help',
+    menu: {
+      favs: {title: 'My Favorites', items: 'code visualaid | searchreplace | emoticons'}
+    },
+    menubar: 'favs file edit view insert format tools table help',
+      });
+    </script>
+  
+
+
+   <style>
+   .fad{visibility:hidden;
+     animation: fad 0.5s 1 0.8s forwards;
+   }
+     @keyframes fad {
+    0% {opacity: 0;
+    visibility: hidden;
+    }
+
+    100% {opacity: 1;
+    visibility:visible;
+    }
+  }
+  .inlin{
+    display: inline-block
+  }
+  #output {
+  padding: 20px;
+  background: #dadada;
+}
+
+form {
+  margin-top: 20px;
+}
+
+select {
+  width: 300px;
+}
+   </style>
+   {% endblock CSS %}
+
+{% block body %}
+<h1>Add Blog</h1>
+<div class="container">
+<form action="/addblog" class="fad" method="POST" enctype='multipart/form-data'>{% csrf_token %}
+<div class="mb-3">
+  <label for="exampleFormControlInput1" class="form-label">Title</label>
+  <input type="text" class="form-control" name="title" id="exampleFormControlInput1" placeholder="Enter title">
+</div>
+<div class="mb-3">
+  <label for="exampleFormControlInput1" class="form-label">Discription</label>
+  <input type="text" class="form-control" name="disc" id="exampleFormControlInput1" placeholder="Enter title">
+</div>
+<div class="mb-3">
+  <label for="exampleFormControlInput1" class="form-label">Head Image</label>
+  <input type="text" class="form-control" name="headimage" id="exampleFormControlInput1" placeholder="Enter title">
+</div>
+
+<div class="mb-3">
+  <label for="exampleFormControlTextarea1" class="form-label">Content</label>
+  <textarea class="form-control" name="content" id="exampleFormControlTextarea1" rows="10" columns="20"></textarea>
+</div>
+<button type="submit" class="btn btn-info inlin fad">Submit</button>
+
+</form>
+</div>
+
+
+ {% endblock %}

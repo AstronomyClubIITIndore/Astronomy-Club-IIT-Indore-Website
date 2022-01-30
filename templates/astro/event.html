@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+{% for e in evs %}
+<div class="card" style="width: 18rem;">
+  <img src="{{e.img}}" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">{{e.name}}</h5>
+    <p class="card-text"> {{e.disc}} </p>
+    <a href="event{{e.id}}" class="btn btn-primary"> Know more </a>
+  </div>
+</div>
+<br>
+{% endfor %}
+
+
+
+{% endblock body %}

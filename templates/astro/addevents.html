@@ -1,0 +1,382 @@
+{% extends 'base.html' %}
+{% block CSS %}
+<style>
+  @import url(https://fonts.googleapis.com/css?family=Roboto:400,300,600,400italic);
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-font-smoothing: antialiased;
+    -o-font-smoothing: antialiased;
+    font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    font-family: "Roboto", Helvetica, Arial, sans-serif;
+    font-weight: 100;
+    font-size: 12px;
+    line-height: 30px;
+    color: #777;
+    background: #a7e5f0;
+  }
+
+  .container {
+    max-width: 700px;
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  #contact input[type="text"],
+  #contact input[type="email"],
+  #contact input[type="tel"],
+  #contact input[type="url"],
+  #contact textarea,
+  #contact button[type="submit"] {
+    font: 400 12px/16px "Roboto", Helvetica, Arial, sans-serif;
+  }
+
+  #contact {
+    background: #F9F9F9;
+    padding: 25px;
+    margin: 150px 0;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+  }
+
+  #contact h3 {
+    display: block;
+    font-size: 30px;
+    font-weight: 300;
+    margin-bottom: 10px;
+  }
+
+  #contact h4 {
+    margin: 5px 0 15px;
+    display: block;
+    font-size: 13px;
+    font-weight: 400;
+  }
+
+  fieldset {
+    border: medium none !important;
+    margin: 0 0 10px;
+    min-width: 100%;
+    padding: 0;
+    width: 100%;
+  }
+
+  #contact input[type="text"],
+  #contact input[type="email"],
+  #contact input[type="tel"],
+  #contact input[type="url"],
+  #contact textarea {
+    width: 100%;
+    border: 1px solid #ccc;
+    background: #FFF;
+    margin: 0 0 5px;
+    padding: 10px;
+  }
+
+  #contact input[type="text"]:hover,
+  #contact input[type="email"]:hover,
+  #contact input[type="tel"]:hover,
+  #contact input[type="url"]:hover,
+  #contact textarea:hover {
+    -webkit-transition: border-color 0.3s ease-in-out;
+    -moz-transition: border-color 0.3s ease-in-out;
+    transition: border-color 0.3s ease-in-out;
+    border: 1px solid #aaa;
+  }
+
+  #contact textarea {
+    height: 100px;
+    max-width: 100%;
+    resize: none;
+  }
+
+  #contact button[type="submit"] {
+    cursor: pointer;
+    width: 100%;
+    border: none;
+    background: #030849;
+    color: #FFF;
+    margin: 0 0 5px;
+    padding: 10px;
+    font-size: 15px;
+  }
+
+  #contact button[type="submit"]:hover {
+    background: #050230;
+    -webkit-transition: background 0.3s ease-in-out;
+    -moz-transition: background 0.3s ease-in-out;
+    transition: background-color 0.3s ease-in-out;
+  }
+
+  #contact button[type="submit"]:active {
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
+  }
+
+  .copyright {
+    text-align: center;
+  }
+
+  #contact input:focus,
+  #contact textarea:focus {
+    outline: 0;
+    border: 1px solid #aaa;
+  }
+
+  ::-webkit-input-placeholder {
+    color: #888;
+  }
+
+  :-moz-placeholder {
+    color: #888;
+  }
+
+  ::-moz-placeholder {
+    color: #888;
+  }
+
+  :-ms-input-placeholder {
+    color: #888;
+  }
+</style>
+
+
+
+
+{% endblock CSS %}
+{% block body %}
+
+
+<div class="container">
+  <form id="contact" action="/addevent" method="POST">
+    {% csrf_token %}
+    <h3>Add New Event</h3>
+
+
+    <fieldset>
+      <input placeholder="Name" type="text" name="Namee" autofocus>
+    </fieldset>
+    <fieldset>
+      <input placeholder="Discription" name="disc" type="text">
+    </fieldset>
+    Image Url
+    <fieldset id="url">
+      <input placeholder="image1" id="url1" name="url1" type="text">
+    </fieldset>
+    <button type="button" class="btn btn-primary" onclick="addurl()">Add more</button>
+    <br>
+    <br>
+    Event info
+    <fieldset id="info">
+      <input placeholder="" type="text" id="info1" name="info1">
+    </fieldset>
+    <button type="button" onclick="addinfo()" class="btn btn-primary">Add more</button>
+    <br>
+    <br>
+    Event Highlights
+    <fieldset id="high">
+      <input placeholder="" type="text" name="high1" id="high1">
+    </fieldset>
+    <button type="button" onclick="addhigh()" class="btn btn-primary">Add more</button>
+    <br>
+    <br>
+
+
+    <fieldset>
+      <button type="submit" id="contact-submit">Add Event</button>
+    </fieldset>
+  </form>
+
+
+</div>
+{% endblock body %}
+{% block bottom_js %}
+
+
+
+
+<script>
+
+
+  var urlnos = 1;
+  function addurl() {
+
+    console.log(urlnos);
+    if (urlnos > 1) {
+      kk = document.getElementById(`url${urlnos}`).value
+
+      if (kk == "") {
+
+      }
+      else {
+        urlnos = urlnos + 1;
+
+        var input = document.createElement("input");
+        var t = document.createAttribute("type");
+        t.value = "text"
+        input.setAttributeNode(t);
+        var ii = document.createAttribute("id");
+        ii.value = `url${urlnos}`
+        var iii = document.createAttribute("name");
+        iii.value = `url${urlnos}`
+        input.setAttributeNode(iii);
+        input.setAttributeNode(ii);
+        document.getElementById("url").appendChild(input);
+
+
+
+      }
+    }
+    else if (urlnos == 1) {
+      console.log("dd");
+
+      if (document.getElementById("url1").value != "") {
+
+        urlnos = urlnos + 1;
+
+        var input = document.createElement("input");
+
+        var t = document.createAttribute("type");
+        t.value = "text"
+        input.setAttributeNode(t);
+        var ii = document.createAttribute("id");
+        ii.value = `url${urlnos}`
+        input.setAttributeNode(ii);
+        var iii = document.createAttribute("name");
+        iii.value = `url${urlnos}`
+        input.setAttributeNode(iii);
+        document.getElementById("url").appendChild(input);
+      }
+      else {
+
+      }
+    }
+
+  }
+
+  var infonos = 1;
+  function addinfo() {
+
+    console.log(infonos);
+    if (infonos > 1) {
+      kk = document.getElementById(`info${infonos}`).value
+
+      if (kk == "") {
+
+      }
+      else {
+        infonos = infonos + 1;
+
+        var input = document.createElement("input");
+        var t = document.createAttribute("type");
+        t.value = "text"
+        input.setAttributeNode(t);
+        var ii = document.createAttribute("id");
+        ii.value = `info${infonos}`
+        input.setAttributeNode(ii);
+        var iii = document.createAttribute("name");
+        iii.value = `info${infonos}`
+        input.setAttributeNode(iii);
+        document.getElementById("info").appendChild(input);
+
+
+
+      }
+    }
+    else if (infonos == 1) {
+      console.log("dd");
+
+      if (document.getElementById("info1").value != "") {
+
+        infonos = infonos + 1;
+
+        var input = document.createElement("input");
+
+        var t = document.createAttribute("type");
+        t.value = "text"
+        input.setAttributeNode(t);
+        var ii = document.createAttribute("id");
+        ii.value = `info${infonos}`
+        input.setAttributeNode(ii);
+        var iii = document.createAttribute("name");
+        iii.value = `info${infonos}`
+        input.setAttributeNode(iii);
+        document.getElementById("info").appendChild(input);
+      }
+      else {
+
+      }
+    }
+
+  }
+  
+  var highnos = 1;
+  function addhigh() {
+
+    console.log(highnos);
+    if (highnos > 1) {
+      kk = document.getElementById(`high${highnos}`).value
+
+      if (kk == "") {
+
+      }
+      else {
+        highnos = highnos + 1;
+
+        var input = document.createElement("input");
+        var t = document.createAttribute("type");
+        t.value = "text"
+        input.setAttributeNode(t);
+        var ii = document.createAttribute("id");
+        ii.value = `high${highnos}`
+        input.setAttributeNode(ii);
+        var iii = document.createAttribute("name");
+        iii.value = `high${highnos}`
+        input.setAttributeNode(iii);
+        document.getElementById("high").appendChild(input);
+
+
+
+      }
+    }
+    else if (highnos == 1) {
+      console.log("dd");
+
+      if (document.getElementById("high1").value != "") {
+
+        highnos = highnos + 1;
+
+        var input = document.createElement("input");
+
+        var t = document.createAttribute("type");
+        t.value = "text"
+        input.setAttributeNode(t);
+        var ii = document.createAttribute("id");
+        ii.value = `high${highnos}`
+        input.setAttributeNode(ii);
+        var iii = document.createAttribute("name");
+        iii.value = `high${highnos}`
+        input.setAttributeNode(iii);
+        document.getElementById("high").appendChild(input);
+      }
+      else {
+
+      }
+    }
+
+  }
+
+
+
+
+
+</script>
+{% endblock bottom_js %}

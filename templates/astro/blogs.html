@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+{% for b in bls %}
+<div class="card" style="width: 18rem;">
+  <img src="{{b.img}}" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">{{b.Title}}</h5>
+    <p class="card-text"> {{b.disc}} </p>
+    <a href="readblog{{b.id}}" class="btn btn-primary"> Know more </a>
+  </div>
+</div>
+<br>
+{% endfor %}
+
+
+
+
+{% endblock body %}

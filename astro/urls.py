@@ -11,8 +11,11 @@ urlpatterns = [
     path('showevent', views.showevent, name='showevent'),
     path('event<int:eid>', views.eventDetail, name='eventDetail'),
     path('addblog', views.addblog, name='addblog'),
+    path('addmember', views.addmember, name='addmember'),
     path('blog', views.blogs, name='blogs'),
+    path('team', views.team, name='team'),
     path('readblog<int:bid>', views.readblog, name='readblog'),
+    path('profile<int:mid>', views.profile, name='profile'),
 
 
 ]

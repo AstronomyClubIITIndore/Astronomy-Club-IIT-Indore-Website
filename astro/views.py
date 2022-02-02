@@ -1,3 +1,5 @@
+from audioop import lin2adpcm
+from code import interact
 from venv import EnvBuilder
 from wsgiref.util import request_uri
 from django.shortcuts import render
@@ -13,7 +15,7 @@ from django.core.paginator import Paginator
 from django.contrib.auth.models import Group, User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
-from .models import Event, Blog
+from .models import Event, Blog, Profile
 import json
 import datetime
 
@@ -134,7 +136,6 @@ def addblog(request):
         blog = Blog(Title=T, headimg=hi, Discription=D,Content=C)
         if T !="" and D !="" and C !="" and hi !="":
             blog.save()
-            print("Save")
 
     return render(request, 'astro/AddBlog.html')
 
@@ -165,6 +166,148 @@ def readblog(request, bid):
         }
 
     return render(request,'astro/Blog_detail.html',oo)
+
+
+def addmember(request):
+    if request.method == "POST":
+        nm = request.POST.get("Name")
+        abt = request.POST.get("abt")
+        branchyear = request.POST.get("branchyear")
+        mno = request.POST.get("mno")
+        email = request.POST.get("email")
+        por = request.POST.get("POR")
+        img = request.POST.get("img")
+        old = request.POST.get("old")
+        new = request.POST.get("new")
+        ghub = request.POST.get("ghub")
+        lin = request.POST.get("lin")
+        insta = request.POST.get("insta")
+        fb = request.POST.get("fb")
+        act = ""
+        for i in range(1, 100):
+            s = "url" + str(i)
+            s1 = "urll" + str(i)
+            head = request.POST.get(s)
+            dc = request.POST.get(s1)
+            if head == None or dc == None:
+                break
+            elif head != None and dc != None:
+                l = str(head)
+                j = str(dc)
+                act += l + "##"+ j +"$$"
+
+        
+        intrests = ""
+        for i in range(1, 100):
+            s = "info" + str(i)
+            val = request.POST.get(s)
+            if val == None:
+                break
+            elif val != "":
+                l = str(val)
+                intrests += l + "$$"
+
+        print(nm,abt,branchyear,mno,email,por,img,old,new,act,intrests)
+        b=branchyear + "$$" + mno + "$$"+ email + "$$"+ por
+        lll= str(ghub) + "$$" + str(lin) + "$$"+ str(insta) + "$$"+ str(fb)
+        
+        ol=""
+        if old==1:
+            ol="old" 
+        elif new==1:
+            ol="new"
+
+
+
+        profile = Profile(Name=nm,branch_year_mobilenumber_email_por=b,About=abt,Intrests=intrests,Activities=act,img=img,git_lin_insta_fb=lll,old=ol  )
+        if nm !="" and b !="" and abt !="" and intrests !="" and act !="" and img !="" and lll !="":
+            profile.save()
+    return render(request,'astro/addMember.html')
+
+def team(request):
+    members = Profile.objects.all().order_by('memb_id')
+    send =[]
+    
+    for b in members:
+        data = b.branch_year_mobilenumber_email_por
+        dat = data.split('$$')
+        
+        oo ={
+            "Name":b.Name,
+            "id":b.memb_id,
+            "img":b.img,
+            "branch_year":dat[0],
+            "mno":dat[1],
+            "email":dat[2],
+            "por":dat[3],
+            "abt":b.About,
+
+        }
+        send.append(oo)
+
+    
+    return render(request,"astro/team.html",{"membrs":send}) 
+
+def profile(request,mid):
+    b = Profile.objects.filter(memb_id=mid).first()
+    data = b.branch_year_mobilenumber_email_por
+    dat = data.split('$$')
+
+    ints = b.Intrests
+    int = ints.split('$$')
+    int.pop()
+
+    actvs = b.Activities,
+    acts = actvs[0].split('$$')
+    acs = acts.pop()
+
+    handles = b.git_lin_insta_fb,
+    hands = handles[0].split('$$')
+    print(hands)
+
+    activities =[]
+    for ac in acts:
+        d = ac.split('##')
+        o = {
+            "Heading":d[0],
+            "Disc":d[1],
+        }
+
+        activities.append(o)
+    
+        
+    main ={
+            "Name":b.Name,
+            "id":b.memb_id,
+            "img":b.img,
+            "branch_year":dat[0],
+            "mno":dat[1],
+            "email":dat[2],
+            "por":dat[3],
+            "abt":b.About,
+            "ints":int,
+            "git":hands[0],
+            "linkdIn":hands[1],
+            "insta":hands[2],
+            "fb":hands[3],
+
+            
+        }
+
+        # old new wala dekh lena
+
+
+
+
+
+
+    return render(request, 'astro/member_profile.html',{"p":main, "aa":activities})
+
+
+
+        
+        
+      
 
 
 

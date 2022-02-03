@@ -301,7 +301,7 @@ def profile(request,mid):
 
 
 
-    return render(request, 'astro/member_profile.html',{"p":main, "aa":activities})
+    return render(request, 'astro/member_profile.html',{"p":main, "aa":activities,"int":int})
 
 
 

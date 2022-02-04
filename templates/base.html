@@ -12,26 +12,26 @@
 </head>
 <body>
 
-  {% load socialaccount %}
-<h1>My Google OAuth Project </h1>
-{% if user.is_authenticated %}
-  <p>Welcome, You are logged in as {{ user.username }}</p>
-{% else %}
-  <a href="{% provider_login_url 'google' %}">Login With Google</a>
-{% endif %}
-  
+
   
   <h1>
-    <a href="/about">about</a>
-    <a href="/addevent">addevent</a>
-    <a href="/showevent">event</a>
-    <a href="/addblog">Addblog</a>
-    <a href="/blog">blogs</a>
-    <a href="/addmember">addmember</a>
-    <a href="/team">Team</a>
-    <a href="/addpublications">Add Publications</a>
-    <a href="/publications">Publications</a>
     <a href="/">home</a>
+    <a href="/about">about</a>
+    <a href="/showevent">event</a>
+    <a href="/blog">blogs</a>
+    <a href="/team">Team</a>
+    <a href="/publications">Publications</a>
+    
+    {% if user.is_authenticated %}
+    <a href="/logoutall">Logout</a>
+    <a href="/addevent">addevent</a>
+    <a href="/addblog">Addblog</a>
+    <a href="/addmember">addmember</a>
+    <a href="/addpublications">Add Publications</a>
+    {% else %}
+    <a href="/loginall">Login</a>
+
+    {% endif %}
 
 
   </h1>

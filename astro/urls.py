@@ -14,10 +14,23 @@ urlpatterns = [
     path('addmember', views.addmember, name='addmember'),
     path('blog', views.blogs, name='blogs'),
     path('team', views.team, name='team'),
+    path('team', views.team, name='team'),
+    path('workspace', views.workspace, name='workspace'),
+    path('loginall', views.loginall, name='loginall'),
+    path('logoutall', views.logoutall, name='logoutall'),
     path('publications', views.Publications, name='Publications'),
     path('addpublications', views.addpublications, name='addpublications'),
     path('readblog<int:bid>', views.readblog, name='readblog'),
     path('profile<int:mid>', views.profile, name='profile'),
+
+    # delete section
+
+    path('deleve<int:eid>', views.deleve, name='deleve'),
+    path('delblog<int:bid>', views.delblog, name='delblog'),
+    path('delprof<int:pid>', views.delprof, name='delprof'),
+    path('delpub<int:puid>', views.delpub, name='delpub'),
+    path('delmember<str:mid>', views.delmember, name='delmember'),
+
 
 
 ]

@@ -9,6 +9,10 @@
     <h5 class="card-title">{{e.name}}</h5>
     <p class="card-text"> {{e.disc}} </p>
     <a href="event{{e.id}}" class="btn btn-primary"> Know more </a>
+{% if user.is_authenticated %}
+<a href="deleve{{e.id}}" class="btn btn-danger"> Delete </a>
+{% endif %}
+
   </div>
 </div>
 <br>

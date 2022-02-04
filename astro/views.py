@@ -12,6 +12,8 @@ from django.shortcuts import render, HttpResponse, redirect
 # from home.models import Contact
 from django.contrib import messages
 from django.core.paginator import Paginator
+from .decorators import unauthenticated_user, allowed_users
+
 from django.contrib.auth.models import Group, User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -27,7 +29,7 @@ def home(request):
 def about(request):
     return render(request, "astro/about.html")
 
-
+@allowed_users(allowed_roles=[ 'developers'])
 def addevent(request):
     if request.method == "POST":
         nm = request.POST.get("Namee")
@@ -126,7 +128,7 @@ def eventDetail(request, eid):
 
 
     return render(request, 'astro/event_detail.html',{"Name":event.Name, "Disc":event.Discription,"imgs":urrr, "infs":inf, "higs":hig})
-
+@allowed_users(allowed_roles=[ 'developers'])
 def addblog(request):
     if request.method == "POST":
         T = request.POST.get("title")
@@ -138,6 +140,7 @@ def addblog(request):
             blog.save()
 
     return render(request, 'astro/AddBlog.html')
+
 
 def blogs(request):
 
@@ -167,7 +170,7 @@ def readblog(request, bid):
 
     return render(request,'astro/Blog_detail.html',oo)
 
-
+@allowed_users(allowed_roles=[ 'developers'])
 def addmember(request):
     if request.method == "POST":
         nm = request.POST.get("Name")
@@ -304,13 +307,25 @@ def profile(request,mid):
     return render(request, 'astro/member_profile.html',{"p":main, "aa":activities,"int":int})
 
 def Publications(request):
-    # myuser = User.objects.create_user("gappa", "gappa@gmail.com", "hllobeby")
-    # print(myuser)
-    # myuser.save()
-    return render(request, 'astro/publications.html')
+    pubs = Publication.objects.all().order_by('publication_id')
+    pus = []
+    for p in pubs:
+        oo ={
+            "publication_id":p.publication_id,
+            "Thumbnail_link":p.Thumbnail_link,
+            "Name":p.Name,
+            "About":p.About,
+            "Link":p.Link,
+
+        }
+        pus.append(oo)
+
+    
+    return render(request, 'astro/publications.html',{"pp":pus})
 
 
 
+@allowed_users(allowed_roles=[ 'developers'])
 def addpublications(request):
     if request.method == "POST":
         nm = request.POST.get("Name")
@@ -322,6 +337,104 @@ def addpublications(request):
             pub.save()
 
     return render(request, 'astro/addpublications.html')
+
+
+
+
+@allowed_users(allowed_roles=[ 'Admins'])
+def workspace(request):
+    if request.method == "POST":
+        nm = request.POST.get("uName")
+        email = request.POST.get("email")
+        name = request.POST.get("name")
+        p1 = request.POST.get("p1")    
+        p2 = request.POST.get("p2") 
+        print(nm,email,name)
+        myuser = User.objects.create_user(nm, email, p1)
+        myuser.first_name = name
+        # print(myuser)
+        myuser.save()
+        group = Group.objects.get(name='developers')
+        myuser.groups.add(group)
+    
+    userl =[]    
+    group = Group.objects.get(name='developers')
+    users = list(group.user_set.all())
+    for user in users:
+        oo = {
+            "Name": user.first_name,
+            "username":user,
+        }
+        userl.append(oo)
+            
+
+
+    return render(request, 'astro/workspace.html',{"uu":userl})
+
+def loginall(request):
+    if request.method == "POST":
+        nm = request.POST.get("uName")
+        p2 = request.POST.get("p2")
+        user = authenticate(username=nm, password=p2)
+        if user is not None:
+            login(request, user)
+            if user.groups.filter(name='Admins').exists():
+                return redirect('workspace')
+
+            else:
+                return redirect('home')
+        else:
+            print("kk")
+            return redirect('home')
+
+    return render(request, 'astro/login.html')
+
+
+
+
+
+
+def logoutall(req):
+    logout(req)
+    return redirect('home')
+
+# Delete section#3333333333333333333333333333333333333333333333333333333333333333333333333
+
+@allowed_users(allowed_roles=[ 'developers'])
+def deleve(request,eid):
+    post = Event.objects.filter(Event_id=eid).first()
+    post.delete()
+    return redirect('showevent')
+
+    
+
+@allowed_users(allowed_roles=[ 'developers'])
+def delblog(request,bid):
+    post = Blog.objects.filter(Blog_id=bid).first()
+    post.delete()
+
+    return redirect('blogs')
+
+
+@allowed_users(allowed_roles=[ 'developers'])
+def delprof(request,pid):
+    post = Profile.objects.filter(memb_id=pid).first()
+    post.delete() 
+    return redirect('team')
+
+
+@allowed_users(allowed_roles=[ 'developers'])
+def delpub(request,puid):
+    post = Publication.objects.filter(publication_id=puid).first()
+    post.delete()
+    return redirect('addpublications')
+
+@allowed_users(allowed_roles=[ 'Admins'])
+def delmember(request,mid):
+    m = User.objects.get(username=mid)
+    m.delete()
+    
+    return redirect('workspace')
 
 
 

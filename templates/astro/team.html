@@ -13,6 +13,9 @@
     </p>
     <p class="card-text"> {{b.abt}} </p>
     <a href="profile{{b.id}}" class="btn btn-primary"> Details </a>
+    {% if user.is_authenticated %}
+<a href="delprof{{b.id}}" class="btn btn-danger"> Delete </a>
+{% endif %}
   </div>
 </div>
 <br>

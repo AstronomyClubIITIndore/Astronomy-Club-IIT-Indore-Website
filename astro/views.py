@@ -304,6 +304,9 @@ def profile(request,mid):
     return render(request, 'astro/member_profile.html',{"p":main, "aa":activities,"int":int})
 
 def Publications(request):
+    # myuser = User.objects.create_user("gappa", "gappa@gmail.com", "hllobeby")
+    # print(myuser)
+    # myuser.save()
     return render(request, 'astro/publications.html')
 
 

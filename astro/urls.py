@@ -14,6 +14,8 @@ urlpatterns = [
     path('addmember', views.addmember, name='addmember'),
     path('blog', views.blogs, name='blogs'),
     path('team', views.team, name='team'),
+    path('publications', views.Publications, name='Publications'),
+    path('addpublications', views.addpublications, name='addpublications'),
     path('readblog<int:bid>', views.readblog, name='readblog'),
     path('profile<int:mid>', views.profile, name='profile'),
 

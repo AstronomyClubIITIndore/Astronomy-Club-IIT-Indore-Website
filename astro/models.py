@@ -49,3 +49,22 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.Name
+class AllowedPerson(models.Model):
+    auth_id=models.AutoField(primary_key=True)
+    Name=models.CharField(max_length=500)
+    Email=models.TextField()
+  
+
+    def __str__(self):
+        return self.Name
+class Publication(models.Model):
+    publication_id=models.AutoField(primary_key=True)
+    Name=models.TextField()
+    About=models.TextField()
+    Thumbnail_link=models.TextField()
+    Link=models.TextField()
+  
+
+    def __str__(self):
+        return self.Name
+

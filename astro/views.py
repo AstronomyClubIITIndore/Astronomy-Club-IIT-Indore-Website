@@ -15,7 +15,7 @@ from django.core.paginator import Paginator
 from django.contrib.auth.models import Group, User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
-from .models import Event, Blog, Profile
+from .models import Event, Blog, Profile, Publication
 import json
 import datetime
 
@@ -302,6 +302,24 @@ def profile(request,mid):
 
 
     return render(request, 'astro/member_profile.html',{"p":main, "aa":activities,"int":int})
+
+def Publications(request):
+    return render(request, 'astro/publications.html')
+
+
+
+def addpublications(request):
+    if request.method == "POST":
+        nm = request.POST.get("Name")
+        abt = request.POST.get("About")    
+        tmbnl = request.POST.get("Thumbnail")    
+        file_link = request.POST.get("Link")    
+        pub = Publication(Name=nm,About=abt, Thumbnail_link=tmbnl, Link= file_link )
+        if nm !="" and abt !="" and tmbnl !="" and file_link != "":
+            pub.save()
+
+    return render(request, 'astro/addpublications.html')
+
 
 
 

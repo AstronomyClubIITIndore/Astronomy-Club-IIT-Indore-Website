@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+{% for b in membrs %}
+<div class="card" style="width: 18rem;">
+  <img src="{{b.img}}" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">{{b.Name}}</h5>
+    <p style="color: red;" class="card-title">{{b.branch_year}}
+        {{b.por}}
+        {{b.email}}
+    </p>
+    <p class="card-text"> {{b.abt}} </p>
+    <a href="profile{{b.id}}" class="btn btn-primary"> Details </a>
+  </div>
+</div>
+<br>
+{% endfor %}
+
+
+
+
+{% endblock body %}

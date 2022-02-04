@@ -30,3 +30,41 @@ class Blog(models.Model):
 
     def __str__(self):
         return self.Title
+
+class Profile(models.Model):
+    memb_id=models.AutoField(primary_key=True)
+    Name=models.CharField(max_length=500)
+    branch_year_mobilenumber_email_por=models.TextField()
+    About=models.TextField()
+    Intrests=models.TextField()
+    Activities=models.TextField()
+    git_lin_insta_fb=models.TextField()
+    img=models.TextField()
+    old=models.TextField()
+  
+    R1=models.TextField(default="")
+    R2=models.TextField(default="")
+    
+
+
+    def __str__(self):
+        return self.Name
+class AllowedPerson(models.Model):
+    auth_id=models.AutoField(primary_key=True)
+    Name=models.CharField(max_length=500)
+    Email=models.TextField()
+  
+
+    def __str__(self):
+        return self.Name
+class Publication(models.Model):
+    publication_id=models.AutoField(primary_key=True)
+    Name=models.TextField()
+    About=models.TextField()
+    Thumbnail_link=models.TextField()
+    Link=models.TextField()
+  
+
+    def __str__(self):
+        return self.Name
+

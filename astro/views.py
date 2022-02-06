@@ -29,7 +29,7 @@ def home(request):
 def about(request):
     return render(request, "astro/about.html")
 
-@allowed_users(allowed_roles=[ 'developers'])
+@allowed_users(allowed_roles=[ 'developers','Admins'])
 def addevent(request):
     if request.method == "POST":
         nm = request.POST.get("Namee")
@@ -128,7 +128,7 @@ def eventDetail(request, eid):
 
 
     return render(request, 'astro/event_detail.html',{"Name":event.Name, "Disc":event.Discription,"imgs":urrr, "infs":inf, "higs":hig})
-@allowed_users(allowed_roles=[ 'developers'])
+@allowed_users(allowed_roles=[ 'developers','Admins'])
 def addblog(request):
     if request.method == "POST":
         T = request.POST.get("title")
@@ -170,7 +170,7 @@ def readblog(request, bid):
 
     return render(request,'astro/Blog_detail.html',oo)
 
-@allowed_users(allowed_roles=[ 'developers'])
+@allowed_users(allowed_roles=[ 'developers','Admins'])
 def addmember(request):
     if request.method == "POST":
         nm = request.POST.get("Name")
@@ -325,7 +325,7 @@ def Publications(request):
 
 
 
-@allowed_users(allowed_roles=[ 'developers'])
+@allowed_users(allowed_roles=[ 'developers','Admins'])
 def addpublications(request):
     if request.method == "POST":
         nm = request.POST.get("Name")
@@ -400,7 +400,7 @@ def logoutall(req):
 
 # Delete section#3333333333333333333333333333333333333333333333333333333333333333333333333
 
-@allowed_users(allowed_roles=[ 'developers'])
+@allowed_users(allowed_roles=[ 'developers','Admins'])
 def deleve(request,eid):
     post = Event.objects.filter(Event_id=eid).first()
     post.delete()
@@ -408,7 +408,7 @@ def deleve(request,eid):
 
     
 
-@allowed_users(allowed_roles=[ 'developers'])
+@allowed_users(allowed_roles=[ 'developers','Admins'])
 def delblog(request,bid):
     post = Blog.objects.filter(Blog_id=bid).first()
     post.delete()
@@ -416,14 +416,14 @@ def delblog(request,bid):
     return redirect('blogs')
 
 
-@allowed_users(allowed_roles=[ 'developers'])
+@allowed_users(allowed_roles=[ 'developers','Admins'])
 def delprof(request,pid):
     post = Profile.objects.filter(memb_id=pid).first()
     post.delete() 
     return redirect('team')
 
 
-@allowed_users(allowed_roles=[ 'developers'])
+@allowed_users(allowed_roles=[ 'developers','Admins'])
 def delpub(request,puid):
     post = Publication.objects.filter(publication_id=puid).first()
     post.delete()

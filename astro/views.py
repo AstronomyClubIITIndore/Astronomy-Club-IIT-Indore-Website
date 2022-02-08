@@ -17,7 +17,7 @@ from .decorators import unauthenticated_user, allowed_users
 from django.contrib.auth.models import Group, User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
-from .models import Event, Blog, Profile, Publication
+from .models import Event, Blog, Profile, Publication,Interview
 import json
 import datetime
 
@@ -337,6 +337,38 @@ def addpublications(request):
             pub.save()
 
     return render(request, 'astro/addpublications.html')
+
+
+@allowed_users(allowed_roles=[ 'developers','Admins'])
+def addinterview(request):
+    if request.method == "POST":
+        Title = request.POST.get("Title")
+        Interviewee = request.POST.get("Interviewee")    
+        Disc = request.POST.get("Disc")    
+        Video = request.POST.get("Video")    
+        Thumbnail = request.POST.get("Thumbnail")    
+        int = Interview(Title=Title,Thumbnail=Thumbnail,Interviewee=Interviewee, Disc=Disc, Video= Video )
+        if Title !="" and Interviewee !="" and Thumbnail !="" and Disc !="" and Video != "":
+            int.save()
+
+    return render(request, 'astro/addinterview.html')
+
+def interview(request):
+    pubs = Interview.objects.all().order_by('interview_id')
+    pus = []
+    for p in pubs:
+        oo ={
+            "Title":p.Title,
+            "Interviewee":p.Interviewee,
+            "Disc":p.Disc,
+            "Thumbnail":p.Thumbnail,
+            "Video":p.Video,
+
+        }
+        pus.append(oo)
+
+    
+    return render(request, 'astro/Interview.html',{"pp":pus})    
 
 
 

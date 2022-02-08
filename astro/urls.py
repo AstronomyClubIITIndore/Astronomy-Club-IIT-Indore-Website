@@ -20,6 +20,8 @@ urlpatterns = [
     path('logoutall', views.logoutall, name='logoutall'),
     path('publications', views.Publications, name='Publications'),
     path('addpublications', views.addpublications, name='addpublications'),
+    path('interview', views.interview, name='interview'),
+    path('addinterview', views.addinterview, name='addinterview'),
     path('readblog<int:bid>', views.readblog, name='readblog'),
     path('profile<int:mid>', views.profile, name='profile'),
 

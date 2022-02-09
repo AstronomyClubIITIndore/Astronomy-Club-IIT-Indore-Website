@@ -1,5 +1,6 @@
 from audioop import lin2adpcm
 from code import interact
+from turtle import title
 from venv import EnvBuilder
 from wsgiref.util import request_uri
 from django.shortcuts import render
@@ -17,7 +18,7 @@ from .decorators import unauthenticated_user, allowed_users
 from django.contrib.auth.models import Group, User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
-from .models import Event, Blog, Profile, Publication,Interview
+from .models import Event, Blog, Profile, Publication,Interview,Photo
 import json
 import datetime
 
@@ -369,6 +370,36 @@ def interview(request):
 
     
     return render(request, 'astro/Interview.html',{"pp":pus})    
+
+
+# @allowed_users(allowed_roles=[ 'developers','Admins'])
+def addimage(request):
+    if request.method == "POST":
+        grp = request.POST.get("grp")
+        link = request.POST.get("link")  
+    
+          
+        int = Photo(Group=grp,Link=link)
+        if grp !="" and link !="":
+            int.save()
+
+    return render(request, 'astro/addimage.html')
+
+def gallery(request):
+    pubs = Photo.objects.all().order_by('Photo_id')
+    arts = []
+    clks = []
+    for p in pubs:
+        if p.Group == "art":
+            arts.append(p.Link)
+        else:
+            clks.append(p.Link)
+                
+
+            
+
+    
+    return render(request, 'astro/gallery.html',{"arts":arts, "clks":clks})    
 
 
 

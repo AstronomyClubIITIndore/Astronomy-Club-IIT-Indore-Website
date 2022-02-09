@@ -22,6 +22,8 @@ urlpatterns = [
     path('addpublications', views.addpublications, name='addpublications'),
     path('interview', views.interview, name='interview'),
     path('addinterview', views.addinterview, name='addinterview'),
+    path('gallery', views.gallery, name='gallery'),
+    path('addimage', views.addimage, name='addimage'),
     path('readblog<int:bid>', views.readblog, name='readblog'),
     path('profile<int:mid>', views.profile, name='profile'),
 

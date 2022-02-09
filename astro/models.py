@@ -93,8 +93,7 @@ class Photo(models.Model):
    
   
 
-    Link=models.TextField(default="")
 
-    def __str__(self):
-        return self.Name
+    # def __str__(self):
+    #     return self.Photo_id
 

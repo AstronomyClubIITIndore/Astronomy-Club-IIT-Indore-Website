@@ -129,7 +129,9 @@
                                 <h4>{{a.Heading}}</h4>
                                 
                                 <br>
-                                {{a.Disc}}
+                                
+{% autoescape off %}{{a.Disc}}{% endautoescape %}
+
                                 <hr>
                                 
                                 

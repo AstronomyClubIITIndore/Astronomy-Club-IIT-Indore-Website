@@ -1,5 +1,6 @@
 from audioop import lin2adpcm
 from code import interact
+from turtle import title
 from venv import EnvBuilder
 from wsgiref.util import request_uri
 from django.shortcuts import render
@@ -17,7 +18,7 @@ from .decorators import unauthenticated_user, allowed_users
 from django.contrib.auth.models import Group, User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
-from .models import Event, Blog, Profile, Publication
+from .models import Event, Blog, Profile, Publication,Interview,Photo
 import json
 import datetime
 
@@ -29,7 +30,7 @@ def home(request):
 def about(request):
     return render(request, "astro/about.html")
 
-@allowed_users(allowed_roles=[ 'developers'])
+@allowed_users(allowed_roles=[ 'developers','Admins'])
 def addevent(request):
     if request.method == "POST":
         nm = request.POST.get("Namee")
@@ -128,7 +129,7 @@ def eventDetail(request, eid):
 
 
     return render(request, 'astro/event_detail.html',{"Name":event.Name, "Disc":event.Discription,"imgs":urrr, "infs":inf, "higs":hig})
-@allowed_users(allowed_roles=[ 'developers'])
+@allowed_users(allowed_roles=[ 'developers','Admins'])
 def addblog(request):
     if request.method == "POST":
         T = request.POST.get("title")
@@ -170,7 +171,7 @@ def readblog(request, bid):
 
     return render(request,'astro/Blog_detail.html',oo)
 
-@allowed_users(allowed_roles=[ 'developers'])
+@allowed_users(allowed_roles=[ 'developers','Admins'])
 def addmember(request):
     if request.method == "POST":
         nm = request.POST.get("Name")
@@ -325,7 +326,7 @@ def Publications(request):
 
 
 
-@allowed_users(allowed_roles=[ 'developers'])
+@allowed_users(allowed_roles=[ 'developers','Admins'])
 def addpublications(request):
     if request.method == "POST":
         nm = request.POST.get("Name")
@@ -337,6 +338,68 @@ def addpublications(request):
             pub.save()
 
     return render(request, 'astro/addpublications.html')
+
+
+@allowed_users(allowed_roles=[ 'developers','Admins'])
+def addinterview(request):
+    if request.method == "POST":
+        Title = request.POST.get("Title")
+        Interviewee = request.POST.get("Interviewee")    
+        Disc = request.POST.get("Disc")    
+        Video = request.POST.get("Video")    
+        Thumbnail = request.POST.get("Thumbnail")    
+        int = Interview(Title=Title,Thumbnail=Thumbnail,Interviewee=Interviewee, Disc=Disc, Video= Video )
+        if Title !="" and Interviewee !="" and Thumbnail !="" and Disc !="" and Video != "":
+            int.save()
+
+    return render(request, 'astro/addinterview.html')
+
+def interview(request):
+    pubs = Interview.objects.all().order_by('interview_id')
+    pus = []
+    for p in pubs:
+        oo ={
+            "Title":p.Title,
+            "Interviewee":p.Interviewee,
+            "Disc":p.Disc,
+            "Thumbnail":p.Thumbnail,
+            "Video":p.Video,
+
+        }
+        pus.append(oo)
+
+    
+    return render(request, 'astro/Interview.html',{"pp":pus})    
+
+
+# @allowed_users(allowed_roles=[ 'developers','Admins'])
+def addimage(request):
+    if request.method == "POST":
+        grp = request.POST.get("grp")
+        link = request.POST.get("link")  
+    
+          
+        int = Photo(Group=grp,Link=link)
+        if grp !="" and link !="":
+            int.save()
+
+    return render(request, 'astro/addimage.html')
+
+def gallery(request):
+    pubs = Photo.objects.all().order_by('Photo_id')
+    arts = []
+    clks = []
+    for p in pubs:
+        if p.Group == "art":
+            arts.append(p.Link)
+        else:
+            clks.append(p.Link)
+                
+
+            
+
+    
+    return render(request, 'astro/gallery.html',{"arts":arts, "clks":clks})    
 
 
 
@@ -400,7 +463,7 @@ def logoutall(req):
 
 # Delete section#3333333333333333333333333333333333333333333333333333333333333333333333333
 
-@allowed_users(allowed_roles=[ 'developers'])
+@allowed_users(allowed_roles=[ 'developers','Admins'])
 def deleve(request,eid):
     post = Event.objects.filter(Event_id=eid).first()
     post.delete()
@@ -408,7 +471,7 @@ def deleve(request,eid):
 
     
 
-@allowed_users(allowed_roles=[ 'developers'])
+@allowed_users(allowed_roles=[ 'developers','Admins'])
 def delblog(request,bid):
     post = Blog.objects.filter(Blog_id=bid).first()
     post.delete()
@@ -416,14 +479,14 @@ def delblog(request,bid):
     return redirect('blogs')
 
 
-@allowed_users(allowed_roles=[ 'developers'])
+@allowed_users(allowed_roles=[ 'developers','Admins'])
 def delprof(request,pid):
     post = Profile.objects.filter(memb_id=pid).first()
     post.delete() 
     return redirect('team')
 
 
-@allowed_users(allowed_roles=[ 'developers'])
+@allowed_users(allowed_roles=[ 'developers','Admins'])
 def delpub(request,puid):
     post = Publication.objects.filter(publication_id=puid).first()
     post.delete()

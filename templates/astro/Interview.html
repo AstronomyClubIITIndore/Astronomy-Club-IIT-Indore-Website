@@ -1,0 +1,56 @@
+{% extends 'base.html' %} {% block body %}
+
+<!-- ======= Why Us Section ======= -->
+<section style="margin-top: 20px;" class="why-us section-bg" data-aos="fade-up" date-aos-delay="200">
+    <div class="container">
+
+        <div class="row">
+            {% for p in pp %}
+
+            <div class="col-lg-6 video-box">
+                <img style="width: 100%;" src="{{p.Thumbnail}}" class="img-fluid" alt="">
+                <a href="{{p.Video}}" class="venobox play-btn mb-4" data-vbtype="video" data-autoplay="true"></a>
+            </div>
+
+            <div class="col-lg-6 d-flex flex-column justify-content-center p-5">
+
+                <div class="icon-box">
+                    <div class="icon">
+                        {% comment %} <i class="bx bx-fingerprint"></i> {% endcomment %}
+                        <img style="padding: 5px;width: 70%;" class="bx bx-fingerprint" src="https://www.svgrepo.com/show/147383/rocket.svg" alt="">
+                    </div>
+                    <h5 class="title"><a href="">{{p.Title}}</a></h5>
+                    <p class="description">Interviewee - {{p.Interviewee}}</p>
+                </div>
+
+                <div class="icon-box">
+                    {% comment %}
+                    <div class="icon"><i class="bx bx-gift"></i></div> {% endcomment %}
+                    <div class="icon">
+                        {% comment %} <i class="bx bx-fingerprint"></i> {% endcomment %}
+                        <img style="padding: 5px;width: 70%;" class="bx bx-fingerprint" src="https://www.svgrepo.com/show/84870/link.svg" alt="">
+                    </div>
+                    <h4 class="title">
+                        <a href=""></a>
+                    </h4>
+                    <p class="description">
+                        {% autoescape off %}{{p.Disc}}{% endautoescape %} </p>
+                </div>
+
+            </div>
+
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+</section>
+
+
+
+
+
+
+
+{% endblock body %}

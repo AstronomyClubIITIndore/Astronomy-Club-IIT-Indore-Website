@@ -1,5 +1,6 @@
 from audioop import lin2adpcm
 from code import interact
+from hashlib import new
 from turtle import title
 from venv import EnvBuilder
 from wsgiref.util import request_uri
@@ -230,27 +231,44 @@ def addmember(request):
 
 def team(request):
     members = Profile.objects.all().order_by('memb_id')
-    send =[]
+    olds =[]
+    news =[]
     
     for b in members:
         data = b.branch_year_mobilenumber_email_por
         dat = data.split('$$')
-        
-        oo ={
-            "Name":b.Name,
-            "id":b.memb_id,
-            "img":b.img,
-            "branch_year":dat[0],
-            "mno":dat[1],
-            "email":dat[2],
-            "por":dat[3],
-            "abt":b.About,
 
-        }
-        send.append(oo)
+        if b.old == "a":
+
+            oo ={
+                "Name":b.Name,
+                "id":b.memb_id,
+                "img":b.img,
+                "branch_year":dat[0],
+                "mno":dat[1],
+                "email":dat[2],
+                "por":dat[3],
+                "abt":b.About,
+
+            }
+            olds.append(oo)
+        else:
+            oo ={
+                "Name":b.Name,
+                "id":b.memb_id,
+                "img":b.img,
+                "branch_year":dat[0],
+                "mno":dat[1],
+                "email":dat[2],
+                "por":dat[3],
+                "abt":b.About,
+
+            }
+            news.append(oo)
+
 
     
-    return render(request,"astro/team.html",{"membrs":send}) 
+    return render(request,"astro/team.html",{"olds":olds, "news":news}) 
 
 def profile(request,mid):
     b = Profile.objects.filter(memb_id=mid).first()
@@ -391,9 +409,19 @@ def gallery(request):
     clks = []
     for p in pubs:
         if p.Group == "art":
-            arts.append(p.Link)
+            # arts.append(p.Link)
+            oo = {
+                "li":p.Link,
+                "id":p.Photo_id,
+            }
+            arts.append(oo)
         else:
-            clks.append(p.Link)
+            oo = {
+                "li":p.Link,
+                "id":p.Photo_id,
+            }
+            clks.append(oo)
+            # clks.append(p.Link)
                 
 
             
@@ -498,6 +526,13 @@ def delmember(request,mid):
     m.delete()
     
     return redirect('workspace')
+
+@allowed_users(allowed_roles=[ 'developers','Admins'])
+def delphoto(request,Photo_id):
+    m = Photo.objects.get(Photo_id=Photo_id)
+    m.delete()
+    
+    return redirect('gallery')
 
 
 

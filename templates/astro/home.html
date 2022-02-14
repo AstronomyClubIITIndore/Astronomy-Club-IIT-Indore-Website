@@ -14,7 +14,7 @@
       <!-- Slide 1 -->
       <div class="carousel-item active">
         <div class="carousel-container">
-          <h2 class="animate__animated animate__fadeInDown">Welcome to <span>Moderna</span></h2>
+          <h2 class="animate__animated animate__fadeInDown">Astronomy Club <span> <br> IIT Indore</span></h2>
           <p class="animate__animated animate__fadeInUp">Ut velit est quam dolor ad a aliquid qui aliquid. Sequi ea ut et est quaerat sequi nihil ut aliquam. Occaecati alias dolorem mollitia ut. Similique ea voluptatem. Esse doloremque accusamus repellendus deleniti vel. Minus et tempore modi architecto.</p>
           <a href="" class="btn-get-started animate__animated animate__fadeInUp">Read More</a>
         </div>
@@ -99,25 +99,37 @@
 
         <div class="row">
           <div class="col-lg-6 video-box">
-            <img src="assets/img/why-us.jpg" class="img-fluid" alt="">
-            <a href="https://www.youtube.com/watch?v=jDDaplaOz7Q" class="venobox play-btn mb-4" data-vbtype="video" data-autoplay="true"></a>
-          </div>
+            <img style="width: 100%;" src="{{p.Thumbnail}}" class="img-fluid" alt="">
+            <a href="{{p.Video}}" target="_blank" class="venobox play-btn mb-4" data-vbtype="video" data-autoplay="true"></a>
+        </div>
 
-          <div class="col-lg-6 d-flex flex-column justify-content-center p-5">
+        <div class="col-lg-6 d-flex flex-column justify-content-center p-5">
 
             <div class="icon-box">
-              <div class="icon"><i class="bx bx-fingerprint"></i></div>
-              <h4 class="title"><a href="">Lorem Ipsum</a></h4>
-              <p class="description">Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident</p>
+                <div class="icon">
+                    {% comment %} <i class="bx bx-fingerprint"></i> {% endcomment %}
+                    <img style="padding: 5px;width: 70%;" class="bx bx-fingerprint" src="https://www.svgrepo.com/show/147383/rocket.svg" alt="">
+                </div>
+                <h5 class="title"><a href="">{{p.Title}}</a></h5>
+                <p class="description">Interviewee - {{p.Interviewee}}</p>
             </div>
 
             <div class="icon-box">
-              <div class="icon"><i class="bx bx-gift"></i></div>
-              <h4 class="title"><a href="">Nemo Enim</a></h4>
-              <p class="description">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque</p>
+                {% comment %}
+                <div class="icon"><i class="bx bx-gift"></i></div> {% endcomment %}
+                <div class="icon">
+                    {% comment %} <i class="bx bx-fingerprint"></i> {% endcomment %}
+                    <img style="padding: 5px;width: 70%;" class="bx bx-fingerprint" src="https://www.svgrepo.com/show/84870/link.svg" alt="">
+                </div>
+                <h4 class="title">
+                    <a href=""></a>
+                </h4>
+                <p class="description">
+                    {% autoescape off %}{{p.Disc}}{% endautoescape %} </p>
             </div>
 
-          </div>
+        </div>
+
         </div>
 
       </div>

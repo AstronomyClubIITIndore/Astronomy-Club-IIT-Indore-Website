@@ -25,7 +25,17 @@ import datetime
 
 # Create your views here.
 def home(request):
-    return render(request, "astro/home.html")
+    p = Interview.objects.all().order_by('interview_id').first()
+    oo ={
+            "Title":p.Title,
+            "Interviewee":p.Interviewee,
+            "Disc":p.Disc,
+            "Thumbnail":p.Thumbnail,
+            "Video":p.Video,
+
+        }
+
+    return render(request, "astro/home.html", {"p":oo })
 
 
 def about(request):

@@ -50,6 +50,8 @@
           <li><a href="/about">About</a></li>
           <li><a href="/showevent">Events</a></li>
           <li><a href="/blog">Blog</a></li>
+          <li><a href="/gallery">Gallery</a></li>
+          <li><a href="/interview">Interview</a></li>
           <li><a href="/team">Team</a></li>
           <li><a href="/publications">Publications</a></li>
 
@@ -60,11 +62,13 @@
               <li><a href="/addblog">Add Blog</a></li>
               <li><a href="/addpublications">Add Publications</a></li>
               <li><a href="/addmember">Add Member</a></li>
+              <li><a href="/addimage">Add Photos</a></li>
+              <li><a href="/workspace">Add devs(Admin acsess)</a></li>
               <li><a href="/logoutall">Logout</a></li>
             </ul>
           </li>
           {% else %}
-          <li><a href="/loginall">Login</a></li>
+          {% comment %} <li><a href="/login">Login</a></li> {% endcomment %}
           {% endif %}
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>

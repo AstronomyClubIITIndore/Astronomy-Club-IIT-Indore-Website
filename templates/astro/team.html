@@ -1,27 +1,104 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% block body %}
 
-{% block body %}
+<main id="main">
 
-{% for b in membrs %}
-<div class="card" style="width: 18rem;">
-  <img src="{{b.img}}" class="card-img-top" alt="...">
-  <div class="card-body">
-    <h5 class="card-title">{{b.Name}}</h5>
-    <p style="color: red;" class="card-title">{{b.branch_year}}
-        {{b.por}}
-        {{b.email}}
-    </p>
-    <p class="card-text"> {{b.abt}} </p>
-    <a href="profile{{b.id}}" class="btn btn-primary"> Details </a>
-    {% if user.is_authenticated %}
-<a href="delprof{{b.id}}" class="btn btn-danger"> Delete </a>
-{% endif %}
-  </div>
-</div>
-<br>
-{% endfor %}
+    <!-- ======= Our Team Section ======= -->
+    <section class="breadcrumbs">
+        <div class="container">
+
+            <div class="d-flex justify-content-between align-items-center">
+                <h2>Our Team</h2>
+                <ol>
+                    <li><a href="index.html">Home</a></li>
+                    <li>Our Team</li>
+                </ol>
+            </div>
+
+        </div>
+    </section>
+    <!-- End Our Team Section -->
+
+    <h4>OLD</h4>
+    <!-- ======= Team Section ======= -->
+    <section class="team" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-duration="500">
+        <div class="container">
+
+            <div class="row">
 
 
 
+
+                {% for b in olds %}
+
+
+                <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
+                    <div class="member">
+                        <div class="member-img">
+                            <img style="width: 100%;height: 400px;" src="{{b.img}}" class="img-fluid" alt="">
+                            <div class="social">
+                                <a href="profile{{b.id}}">Details</a>
+
+                            </div>
+                        </div>
+                        <div class="member-info">
+                            <h4>{{b.Name}}</h4>
+                            <span style="color: red;">{{b.branch_year}} <br>  {{b.por}} <br> {{b.email}}</span>
+                            <p> {{b.abt}}</p>
+                        </div>
+                        {% if user.is_authenticated %}
+                        <a href="delprof{{b.id}}" class="btn btn-danger"> Delete </a> {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+
+
+
+            </div>
+
+        </div>
+    </section>
+    <!-- End Team Section -->
+
+
+    <h4>NEW</h4>
+    <section class="team" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-duration="500">
+        <div class="container">
+
+            <div class="row">
+
+
+
+
+                {% for b in news %}
+
+
+                <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
+                    <div class="member">
+                        <div class="member-img">
+                            <img style="width: 100%;height: 400px;" src="{{b.img}}" class="img-fluid" alt="">
+                            <div class="social">
+                                <a href="profile{{b.id}}">Details</a>
+
+                            </div>
+                        </div>
+                        <div class="member-info">
+                            <h4>{{b.Name}}</h4>
+                            <span style="color: red;">{{b.branch_year}} <br>  {{b.por}} <br> {{b.email}}</span>
+                            <p> {{b.abt}}</p>
+                        </div>
+                        {% if user.is_authenticated %}
+                        <a href="delprof{{b.id}}" class="btn btn-danger"> Delete </a> {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+
+        </div>
+    </section>
+    <!-- End Team Section -->
+
+</main>
+<!-- End #main -->
 
 {% endblock body %}

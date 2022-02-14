@@ -9,7 +9,7 @@
             <div class="d-flex justify-content-between align-items-center">
                 <h2>Our Team</h2>
                 <ol>
-                    <li><a href="index.html">Home</a></li>
+                    <li><a href="/">Home</a></li>
                     <li>Our Team</li>
                 </ol>
             </div>
@@ -17,19 +17,49 @@
         </div>
     </section>
     <!-- End Our Team Section -->
-
-    <h4>OLD</h4>
+    
     <!-- ======= Team Section ======= -->
+    <div class="section-title">
+        <h2>Current Team</h2>
+    </div>
     <section class="team" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-duration="500">
         <div class="container">
-
             <div class="row">
 
+                {% for b in news %}
 
+                <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
+                    <div class="member">
+                        <div class="member-img">
+                            <img src="{{b.img}}" class="img-fluid" alt="">
+                            <div class="social">
+                                <a href="profile{{b.id}}">Details</a>
+                            </div>
+                        </div>
+                        <div class="member-info">
+                            <h4>{{b.Name}}</h4>
+                            <span style="color: red;">{{b.branch_year}} <br>  {{b.por}} <br> {{b.email}}</span>
+                            <p> {{b.abt}}</p>
+                        </div>
+                        {% if user.is_authenticated %}
+                        <a href="delprof{{b.id}}" class="btn btn-danger"> Delete </a> {% endif %}
+                    </div>
+                </div>
 
+                {% endfor %}
+
+            </div>
+        </div>
+    </section>
+
+    <div class="section-title">
+        <h2>Alumni</h2>
+    </div>
+    <section class="team" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-duration="500">
+        <div class="container">
+            <div class="row">
 
                 {% for b in olds %}
-
 
                 <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
                     <div class="member">
@@ -49,53 +79,16 @@
                         <a href="delprof{{b.id}}" class="btn btn-danger"> Delete </a> {% endif %}
                     </div>
                 </div>
+
                 {% endfor %}
 
-
-
             </div>
-
         </div>
     </section>
     <!-- End Team Section -->
 
 
-    <h4>NEW</h4>
-    <section class="team" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-duration="500">
-        <div class="container">
-
-            <div class="row">
-
-
-
-
-                {% for b in news %}
-
-
-                <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
-                    <div class="member">
-                        <div class="member-img">
-                            <img style="width: 100%;height: 400px;" src="{{b.img}}" class="img-fluid" alt="">
-                            <div class="social">
-                                <a href="profile{{b.id}}">Details</a>
-
-                            </div>
-                        </div>
-                        <div class="member-info">
-                            <h4>{{b.Name}}</h4>
-                            <span style="color: red;">{{b.branch_year}} <br>  {{b.por}} <br> {{b.email}}</span>
-                            <p> {{b.abt}}</p>
-                        </div>
-                        {% if user.is_authenticated %}
-                        <a href="delprof{{b.id}}" class="btn btn-danger"> Delete </a> {% endif %}
-                    </div>
-                </div>
-                {% endfor %}
-
-            </div>
-
-        </div>
-    </section>
+    
     <!-- End Team Section -->
 
 </main>

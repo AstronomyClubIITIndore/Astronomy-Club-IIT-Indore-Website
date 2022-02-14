@@ -1,85 +1,85 @@
-{% extends 'base.html' %} {% block body %}
-<main id="main">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-    <!-- ======= Our Portfolio Section ======= -->
-    <section class="breadcrumbs">
-        <div class="container">
-
-            <div class="d-flex justify-content-between align-items-center">
-                <h2>Our Portfolio</h2>
-                <ol>
-                    <li><a href="index.html">Home</a></li>
-                    <li>Our Portfolio</li>
-                </ol>
-            </div>
-
-        </div>
-    </section>
-    <!-- End Our Portfolio Section -->
-
-    <!-- ======= Portfolio Section ======= -->
-    <section class="portfolio">
-        <div class="container">
-
-            <div class="row">
-                <div class="col-lg-12">
-                    <ul id="portfolio-flters">
-                        <li data-filter="*" class="filter-active">All</li>
-                        <li data-filter=".filter-app">Arts</li>
-                        {% comment %}
-                        <li data-filter=".filter-card">Card</li> {% endcomment %}
-                        <li data-filter=".filter-web">Clicks</li>
-                    </ul>
+{% extends 'base.html' %}
+{% block body %}
+    <main id="main">
+        {% comment %} <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> {% endcomment %}
+        <!-- ======= Gallery Section ======= -->
+        <section class="breadcrumbs">
+            <div class="container">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h2>Gallery</h2>
+                    <ol>
+                        <li>
+                            <a href="/">Home</a>
+                        </li>
+                        <li>Gallery</li>
+                    </ol>
                 </div>
             </div>
-
-            <div class="row portfolio-container" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-duration="500">
-
-                {% for a in arts %}
-
-
-                <div class="col-lg-4 col-md-6 portfolio-wrap filter-app">
-                    <div class="portfolio-item">
-                        <img style="width: 100%;" src="{{a.li}}" class="img-fluid" alt="">
-                        <div class="portfolio-info">
-                            <h3>Arts</h3>
-                            <div>
-                                <a href="{{a.li}}" target="_blank" data-gallery="portfolioGallery" class="portfolio-lightbox" title="App 1"><i class="bx bx-plus"></i></a> {% if user.is_authenticated %}
-                                <a href="delphoto{{a.id}}" title="Portfolio Details"><i class="fa fa-trash"></i></a> {% endif %}
-                            </div>
-                        </div>
+        </section>
+        <!-- End Gallery Section -->
+        <!-- ======= Gallery Section ======= -->
+        <section class="portfolio">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <ul id="portfolio-flters">
+                            <li data-filter="*" class="filter-active">All</li>
+                            <li data-filter=".filter-app">Arts</li>
+                            {% comment %}
+                            <li data-filter=".filter-card">Card</li> {% endcomment %}
+                            <li data-filter=".filter-web">Clicks</li>
+                        </ul>
                     </div>
                 </div>
-                {% endfor %} {% for c in clks %}
-
-
-                <div class="col-lg-4 col-md-6 portfolio-wrap filter-web">
-                    <div class="portfolio-item">
-                        <img style="width: 100%;" src="{{c.li}}" class="img-fluid" alt="">
-                        <div class="portfolio-info">
-                            <h3>Clicks</h3>
-                            <div>
-                                <a href="{{c.li}}" target="_blank" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Web 3"><i class="bx bx-plus"></i></a> {% if user.is_authenticated %}
-                                <a href="delphoto{{c.id}}" title="Portfolio Details"><i class="fa fa-trash"></i></a> {% endif %}
+                <div class="row portfolio-container"
+                     data-aos="fade-up"
+                     data-aos-easing="ease-in-out"
+                     data-aos-duration="500">
+                    {% for a in arts %}
+                        <div class="col-lg-4 col-md-6 portfolio-wrap filter-app">
+                            <div class="portfolio-item">
+                                <img style="width: 100%;" src="{{ a.li }}" class="img-fluid" alt="">
+                                <div class="portfolio-info">
+                                    <h3>Arts</h3>
+                                    <div>
+                                        <a href="{{ a.li }}"
+                                           target="_blank"
+                                           data-gallery="portfolioGallery"
+                                           class="portfolio-lightbox"
+                                           title="App 1"><i class="bx bx-plus"></i></a>
+                                        {% if user.is_authenticated %}
+                                            <a href="delphoto{{ a.id }}" title="Portfolio Details"><i class="fa fa-trash"></i></a>
+                                        {% endif %}
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    {% endfor %}
+                    {% for c in clks %}
+                        <div class="col-lg-4 col-md-6 portfolio-wrap filter-web">
+                            <div class="portfolio-item">
+                                <img style="width: 100%;" src="{{ c.li }}" class="img-fluid" alt="">
+                                <div class="portfolio-info">
+                                    <h3>Clicks</h3>
+                                    <div>
+                                        <a href="{{ c.li }}"
+                                           target="_blank"
+                                           data-gallery="portfolioGallery"
+                                           class="portfolio-lightbox"
+                                           title="Web 3"><i class="bx bx-plus"></i></a>
+                                        {% if user.is_authenticated %}
+                                            <a href="delphoto{{ c.id }}" title="Portfolio Details"><i class="fa fa-trash"></i></a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
                 </div>
-                {% endfor %}
-
-
             </div>
-
-        </div>
-    </section>
-    <!-- End Portfolio Section -->
-
-</main>
-
-
-
-
-
+        </section>
+        <!-- End Gallery Section -->
+    </main>
 {% endblock body %}

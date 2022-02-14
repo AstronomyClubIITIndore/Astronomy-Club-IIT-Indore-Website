@@ -18,7 +18,7 @@ from .decorators import unauthenticated_user, allowed_users
 from django.contrib.auth.models import Group, User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
-from .models import Event, Blog, Profile, Publication,Interview,Photo
+from .models import Event, Blog, Profile, Publication, Interview, Photo
 import json
 import datetime
 
@@ -30,7 +30,8 @@ def home(request):
 def about(request):
     return render(request, "astro/about.html")
 
-@allowed_users(allowed_roles=[ 'developers','Admins'])
+
+@allowed_users(allowed_roles=["developers", "Admins"])
 def addevent(request):
     if request.method == "POST":
         nm = request.POST.get("Namee")
@@ -73,105 +74,112 @@ def addevent(request):
     else:
         return render(request, "astro/addevents.html")
 
+
 def showevent(request):
-    events = Event.objects.all().order_by('Event_id')
-    ev=[]
+    events = Event.objects.all().order_by("Event_id")
+    ev = []
     for e in events:
         urls = e.imgUrls
-        urrr = urls.split('$$')
-        
+        urrr = urls.split("$$")
 
         # info = e.Info
         # inf = info.split('$$')
 
         # high = e.Highlights
         # hig = high.split('$$')
-        
-        
 
         oo = {
-            "id":e.Event_id,
-            "name":e.Name,
-            "disc":e.Discription,
-            "img":urrr[0],
+            "id": e.Event_id,
+            "name": e.Name,
+            "disc": e.Discription,
+            "img": urrr[0],
             # "urls":urrr,
             # "inf":inf,
             # "hig":hig,
         }
         ev.append(oo)
-    evs = {
-        "evs":ev
-    }
+    evs = {"evs": ev}
 
+    return render(request, "astro/event.html", evs)
 
-        
-
-    return render(request, 'astro/event.html', evs)
 
 def eventDetail(request, eid):
     event = Event.objects.filter(Event_id=eid).first()
     urls = event.imgUrls
-    urrr = urls.split('$$')
+    urrr = urls.split("$$")
     urrr.pop()
-        
 
     info = event.Info
-    inf = info.split('$$')
+    inf = info.split("$$")
     inf.pop()
 
-
     high = event.Highlights
-    hig = high.split('$$')
+    hig = high.split("$$")
     hig.pop()
 
+    return render(
+        request,
+        "astro/event_detail.html",
+        {
+            "Name": event.Name,
+            "Disc": event.Discription,
+            "imgs": urrr,
+            "infs": inf,
+            "higs": hig,
+        },
+    )
 
 
-
-
-    return render(request, 'astro/event_detail.html',{"Name":event.Name, "Disc":event.Discription,"imgs":urrr, "infs":inf, "higs":hig})
-@allowed_users(allowed_roles=[ 'developers','Admins'])
+@allowed_users(allowed_roles=["developers", "Admins"])
 def addblog(request):
     if request.method == "POST":
         T = request.POST.get("title")
         D = request.POST.get("disc")
         C = request.POST.get("content")
         hi = request.POST.get("headimage")
-        blog = Blog(Title=T, headimg=hi, Discription=D,Content=C)
-        if T !="" and D !="" and C !="" and hi !="":
+        auth = request.POST.get("author")
+        dt = request.POST.get("date")
+        blog = Blog(Title=T, headimg=hi, Discription=D, Content=C, Author=auth, Date=dt)
+        if T != "" and D != "" and C != "" and hi != "":
             blog.save()
 
-    return render(request, 'astro/AddBlog.html')
+    return render(request, "astro/AddBlog.html")
 
 
 def blogs(request):
 
-    blogs = Blog.objects.all().order_by('Blog_id')
-    send =[]
+    blogs = Blog.objects.all().order_by("Blog_id")
+    send = []
     for b in blogs:
-        oo ={
-            "Title":b.Title,
-            "id":b.Blog_id,
-            "disc":b.Discription,
-            "img":b.headimg
+        oo = {
+            "Title": b.Title,
+            "id": b.Blog_id,
+            "disc": b.Discription,
+            "img": b.headimg,
+            "aut": b.Author,
+            "dt": b.Date,
         }
         send.append(oo)
 
-    
+    return render(request, "astro/blogs.html", {"bls": send})
 
-    return render(request, 'astro/blogs.html', {"bls":send})
+
 def readblog(request, bid):
     b = Blog.objects.filter(Blog_id=bid).first()
-    oo ={
-            "Title":b.Title,
-            "id":b.Blog_id,
-            "disc":b.Discription,
-            "img":b.headimg,
-            "cnt":b.Content,
-        }
+    oo = {
+        "Title": b.Title,
+        "id": b.Blog_id,
+        "disc": b.Discription,
+        "img": b.headimg,
+        "cnt": b.Content,
+        "aut": b.Author,
+        "dt": b.Date,
+    }
 
-    return render(request,'astro/Blog_detail.html',oo)
+    return render(request, "astro/Blog_detail.html", oo)
 
-@allowed_users(allowed_roles=[ 'developers','Admins'])
+
+@allowed_users(allowed_roles=["developers", "Admins"])
 def addmember(request):
     if request.method == "POST":
         nm = request.POST.get("Name")
@@ -198,9 +206,8 @@ def addmember(request):
             elif head != None and dc != None:
                 l = str(head)
                 j = str(dc)
-                act += l + "##"+ j +"$$"
+                act += l + "##" + j + "$$"
 
-        
         intrests = ""
         for i in range(1, 100):
             s = "info" + str(i)
@@ -211,182 +218,200 @@ def addmember(request):
                 l = str(val)
                 intrests += l + "$$"
 
-        print(nm,abt,branchyear,mno,email,por,img,old,new,act,intrests)
-        b=branchyear + "$$" + mno + "$$"+ email + "$$"+ por
-        lll= str(ghub) + "$$" + str(lin) + "$$"+ str(insta) + "$$"+ str(fb)
-        
-        ol=""
-        if old==1:
-            ol="old" 
-        elif new==1:
-            ol="new"
+        print(nm, abt, branchyear, mno, email, por, img, old, new, act, intrests)
+        b = branchyear + "$$" + mno + "$$" + email + "$$" + por
+        lll = str(ghub) + "$$" + str(lin) + "$$" + str(insta) + "$$" + str(fb)
 
+        ol = ""
+        if old == 1:
+            ol = "old"
+        elif new == 1:
+            ol = "new"
 
-
-        profile = Profile(Name=nm,branch_year_mobilenumber_email_por=b,About=abt,Intrests=intrests,Activities=act,img=img,git_lin_insta_fb=lll,old=ol  )
-        if nm !="" and b !="" and abt !="" and intrests !="" and act !="" and img !="" and lll !="":
+        profile = Profile(
+            Name=nm,
+            branch_year_mobilenumber_email_por=b,
+            About=abt,
+            Intrests=intrests,
+            Activities=act,
+            img=img,
+            git_lin_insta_fb=lll,
+            old=ol,
+        )
+        if (
+            nm != ""
+            and b != ""
+            and abt != ""
+            and intrests != ""
+            and act != ""
+            and img != ""
+            and lll != ""
+        ):
             profile.save()
-    return render(request,'astro/addMember.html')
+    return render(request, "astro/addMember.html")
+
 
 def team(request):
-    members = Profile.objects.all().order_by('memb_id')
-    send =[]
-    
+    members = Profile.objects.all().order_by("memb_id")
+    send = []
+
     for b in members:
         data = b.branch_year_mobilenumber_email_por
-        dat = data.split('$$')
-        
-        oo ={
-            "Name":b.Name,
-            "id":b.memb_id,
-            "img":b.img,
-            "branch_year":dat[0],
-            "mno":dat[1],
-            "email":dat[2],
-            "por":dat[3],
-            "abt":b.About,
+        dat = data.split("$$")
 
+        oo = {
+            "Name": b.Name,
+            "id": b.memb_id,
+            "img": b.img,
+            "branch_year": dat[0],
+            "mno": dat[1],
+            "email": dat[2],
+            "por": dat[3],
+            "abt": b.About,
         }
         send.append(oo)
 
-    
-    return render(request,"astro/team.html",{"membrs":send}) 
+    return render(request, "astro/team.html", {"membrs": send})
 
-def profile(request,mid):
+
+def profile(request, mid):
     b = Profile.objects.filter(memb_id=mid).first()
     data = b.branch_year_mobilenumber_email_por
-    dat = data.split('$$')
+    dat = data.split("$$")
 
     ints = b.Intrests
-    int = ints.split('$$')
+    int = ints.split("$$")
     int.pop()
 
-    actvs = b.Activities,
-    acts = actvs[0].split('$$')
+    actvs = (b.Activities,)
+    acts = actvs[0].split("$$")
     acs = acts.pop()
 
-    handles = b.git_lin_insta_fb,
-    hands = handles[0].split('$$')
+    handles = (b.git_lin_insta_fb,)
+    hands = handles[0].split("$$")
     print(hands)
 
-    activities =[]
+    activities = []
     for ac in acts:
-        d = ac.split('##')
+        d = ac.split("##")
         o = {
-            "Heading":d[0],
-            "Disc":d[1],
+            "Heading": d[0],
+            "Disc": d[1],
         }
 
         activities.append(o)
-    
-        
-    main ={
-            "Name":b.Name,
-            "id":b.memb_id,
-            "img":b.img,
-            "branch_year":dat[0],
-            "mno":dat[1],
-            "email":dat[2],
-            "por":dat[3],
-            "abt":b.About,
-            "ints":int,
-            "git":hands[0],
-            "linkdIn":hands[1],
-            "insta":hands[2],
-            "fb":hands[3],
 
-            
-        }
+    main = {
+        "Name": b.Name,
+        "id": b.memb_id,
+        "img": b.img,
+        "branch_year": dat[0],
+        "mno": dat[1],
+        "email": dat[2],
+        "por": dat[3],
+        "abt": b.About,
+        "ints": int,
+        "git": hands[0],
+        "linkdIn": hands[1],
+        "insta": hands[2],
+        "fb": hands[3],
+    }
 
-        # old new wala dekh lena
+    # old new wala dekh lena
 
+    return render(
+        request, "astro/member_profile.html", {"p": main, "aa": activities, "int": int}
+    )
 
-
-
-
-
-    return render(request, 'astro/member_profile.html',{"p":main, "aa":activities,"int":int})
 
 def Publications(request):
-    pubs = Publication.objects.all().order_by('publication_id')
+    pubs = Publication.objects.all().order_by("publication_id")
     pus = []
     for p in pubs:
-        oo ={
-            "publication_id":p.publication_id,
-            "Thumbnail_link":p.Thumbnail_link,
-            "Name":p.Name,
-            "About":p.About,
-            "Link":p.Link,
-
+        oo = {
+            "publication_id": p.publication_id,
+            "Thumbnail_link": p.Thumbnail_link,
+            "Name": p.Name,
+            "About": p.About,
+            "Link": p.Link,
         }
         pus.append(oo)
 
-    
-    return render(request, 'astro/publications.html',{"pp":pus})
+    return render(request, "astro/publications.html", {"pp": pus})
 
 
-
-@allowed_users(allowed_roles=[ 'developers','Admins'])
+@allowed_users(allowed_roles=["developers", "Admins"])
 def addpublications(request):
     if request.method == "POST":
         nm = request.POST.get("Name")
-        abt = request.POST.get("About")    
-        tmbnl = request.POST.get("Thumbnail")    
-        file_link = request.POST.get("Link")    
-        pub = Publication(Name=nm,About=abt, Thumbnail_link=tmbnl, Link= file_link )
-        if nm !="" and abt !="" and tmbnl !="" and file_link != "":
+        abt = request.POST.get("About")
+        tmbnl = request.POST.get("Thumbnail")
+        file_link = request.POST.get("Link")
+        pub = Publication(Name=nm, About=abt, Thumbnail_link=tmbnl, Link=file_link)
+        if nm != "" and abt != "" and tmbnl != "" and file_link != "":
             pub.save()
 
-    return render(request, 'astro/addpublications.html')
+    return render(request, "astro/addpublications.html")
 
 
-@allowed_users(allowed_roles=[ 'developers','Admins'])
+@allowed_users(allowed_roles=["developers", "Admins"])
 def addinterview(request):
     if request.method == "POST":
         Title = request.POST.get("Title")
-        Interviewee = request.POST.get("Interviewee")    
-        Disc = request.POST.get("Disc")    
-        Video = request.POST.get("Video")    
-        Thumbnail = request.POST.get("Thumbnail")    
-        int = Interview(Title=Title,Thumbnail=Thumbnail,Interviewee=Interviewee, Disc=Disc, Video= Video )
-        if Title !="" and Interviewee !="" and Thumbnail !="" and Disc !="" and Video != "":
+        Interviewee = request.POST.get("Interviewee")
+        Disc = request.POST.get("Disc")
+        Video = request.POST.get("Video")
+        Thumbnail = request.POST.get("Thumbnail")
+        int = Interview(
+            Title=Title,
+            Thumbnail=Thumbnail,
+            Interviewee=Interviewee,
+            Disc=Disc,
+            Video=Video,
+        )
+        if (
+            Title != ""
+            and Interviewee != ""
+            and Thumbnail != ""
+            and Disc != ""
+            and Video != ""
+        ):
             int.save()
 
-    return render(request, 'astro/addinterview.html')
+    return render(request, "astro/addinterview.html")
+
 
 def interview(request):
-    pubs = Interview.objects.all().order_by('interview_id')
+    pubs = Interview.objects.all().order_by("interview_id")
     pus = []
     for p in pubs:
-        oo ={
-            "Title":p.Title,
-            "Interviewee":p.Interviewee,
-            "Disc":p.Disc,
-            "Thumbnail":p.Thumbnail,
-            "Video":p.Video,
-
+        oo = {
+            "Title": p.Title,
+            "Interviewee": p.Interviewee,
+            "Disc": p.Disc,
+            "Thumbnail": p.Thumbnail,
+            "Video": p.Video,
         }
         pus.append(oo)
 
-    
-    return render(request, 'astro/Interview.html',{"pp":pus})    
+    return render(request, "astro/Interview.html", {"pp": pus})
 
 
 # @allowed_users(allowed_roles=[ 'developers','Admins'])
 def addimage(request):
     if request.method == "POST":
         grp = request.POST.get("grp")
-        link = request.POST.get("link")  
-    
-          
-        int = Photo(Group=grp,Link=link)
-        if grp !="" and link !="":
+        link = request.POST.get("link")
+
+        int = Photo(Group=grp, Link=link)
+        if grp != "" and link != "":
             int.save()
 
-    return render(request, 'astro/addimage.html')
+    return render(request, "astro/addimage.html")
+
 
 def gallery(request):
-    pubs = Photo.objects.all().order_by('Photo_id')
+    pubs = Photo.objects.all().order_by("Photo_id")
     arts = []
     clks = []
     for p in pubs:
@@ -394,45 +419,38 @@ def gallery(request):
             arts.append(p.Link)
         else:
             clks.append(p.Link)
-                
 
-            
-
-    
-    return render(request, 'astro/gallery.html',{"arts":arts, "clks":clks})    
+    return render(request, "astro/gallery.html", {"arts": arts, "clks": clks})
 
 
-
-
-@allowed_users(allowed_roles=[ 'Admins'])
+@allowed_users(allowed_roles=["Admins"])
 def workspace(request):
     if request.method == "POST":
         nm = request.POST.get("uName")
         email = request.POST.get("email")
         name = request.POST.get("name")
-        p1 = request.POST.get("p1")    
-        p2 = request.POST.get("p2") 
-        print(nm,email,name)
+        p1 = request.POST.get("p1")
+        p2 = request.POST.get("p2")
+        print(nm, email, name)
         myuser = User.objects.create_user(nm, email, p1)
         myuser.first_name = name
         # print(myuser)
         myuser.save()
-        group = Group.objects.get(name='developers')
+        group = Group.objects.get(name="developers")
         myuser.groups.add(group)
-    
-    userl =[]    
-    group = Group.objects.get(name='developers')
+
+    userl = []
+    group = Group.objects.get(name="developers")
     users = list(group.user_set.all())
     for user in users:
         oo = {
             "Name": user.first_name,
-            "username":user,
+            "username": user,
         }
         userl.append(oo)
-            
 
+    return render(request, "astro/workspace.html", {"uu": userl})
 
-    return render(request, 'astro/workspace.html',{"uu":userl})
 
 def loginall(request):
     if request.method == "POST":
@@ -441,70 +459,58 @@ def loginall(request):
         user = authenticate(username=nm, password=p2)
         if user is not None:
             login(request, user)
-            if user.groups.filter(name='Admins').exists():
-                return redirect('workspace')
+            if user.groups.filter(name="Admins").exists():
+                return redirect("workspace")
 
             else:
-                return redirect('home')
+                return redirect("home")
         else:
             print("kk")
-            return redirect('home')
+            return redirect("home")
 
-    return render(request, 'astro/login.html')
-
-
-
-
+    return render(request, "astro/login.html")
 
 
 def logoutall(req):
     logout(req)
-    return redirect('home')
+    return redirect("home")
+
 
 # Delete section#3333333333333333333333333333333333333333333333333333333333333333333333333
 
-@allowed_users(allowed_roles=[ 'developers','Admins'])
-def deleve(request,eid):
+
+@allowed_users(allowed_roles=["developers", "Admins"])
+def deleve(request, eid):
     post = Event.objects.filter(Event_id=eid).first()
     post.delete()
-    return redirect('showevent')
+    return redirect("showevent")
 
-    
 
-@allowed_users(allowed_roles=[ 'developers','Admins'])
-def delblog(request,bid):
+@allowed_users(allowed_roles=["developers", "Admins"])
+def delblog(request, bid):
     post = Blog.objects.filter(Blog_id=bid).first()
     post.delete()
 
-    return redirect('blogs')
+    return redirect("blogs")
 
 
-@allowed_users(allowed_roles=[ 'developers','Admins'])
-def delprof(request,pid):
+@allowed_users(allowed_roles=["developers", "Admins"])
+def delprof(request, pid):
     post = Profile.objects.filter(memb_id=pid).first()
-    post.delete() 
-    return redirect('team')
+    post.delete()
+    return redirect("team")
 
 
-@allowed_users(allowed_roles=[ 'developers','Admins'])
-def delpub(request,puid):
+@allowed_users(allowed_roles=["developers", "Admins"])
+def delpub(request, puid):
     post = Publication.objects.filter(publication_id=puid).first()
     post.delete()
-    return redirect('addpublications')
+    return redirect("addpublications")
 
-@allowed_users(allowed_roles=[ 'Admins'])
-def delmember(request,mid):
+
+@allowed_users(allowed_roles=["Admins"])
+def delmember(request, mid):
     m = User.objects.get(username=mid)
     m.delete()
-    
-    return redirect('workspace')
 
-
-
-
-        
-        
-      
-
-
-
+    return redirect("workspace")

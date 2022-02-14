@@ -1,9 +1,23 @@
 {% extends 'base.html' %}
 {% block body %}
     <main id="main">
+        <section class="breadcrumbs">
+            <div class="container">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h2>Blog</h2>
+                    <ol>
+                        <li>
+                            <a href="/">Home</a>
+                        </li>
+                        <li>Blog</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+        <!-- End Blog Section -->
         <!-- ======= Blog Section ======= -->
         <section id="blog" class="blog">
-            <div  class="container" data-aos="fade-up">
+            <div class="container" data-aos="fade-up">
                 <div class="row">
                     <div class="col-lg-8 entries" style="margin: auto;">
                         {% for b in bls %}
@@ -17,10 +31,10 @@
                                 <div class="entry-meta">
                                     <ul>
                                         <li class="d-flex align-items-center">
-                                            <i class="bi bi-person"></i><a>{{b.aut}}</a>
+                                            <i class="bi bi-person"></i><a>{{ b.aut }}</a>
                                         </li>
                                         <li class="d-flex align-items-center">
-                                            <i class="bi bi-clock"></i> <a><time datetime="2020-01-01">{{b.dt}}</time></a>
+                                            <i class="bi bi-clock"></i> <a><time datetime="2020-01-01">{{ b.dt }}</time></a>
                                         </li>
                                     </ul>
                                 </div>

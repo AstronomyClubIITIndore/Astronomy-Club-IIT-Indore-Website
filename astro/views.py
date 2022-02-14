@@ -34,8 +34,31 @@ def home(request):
             "Video":p.Video,
 
         }
+    e = Event.objects.all().order_by('Event_id').first()
+    urls = e.imgUrls
+    urrr = urls.split('$$')
+        
 
-    return render(request, "astro/home.html", {"p":oo })
+        # info = e.Info
+        # inf = info.split('$$')
+
+        # high = e.Highlights
+        # hig = high.split('$$')
+        
+        
+
+    ooo = {
+            "id":e.Event_id,
+            "name":e.Name,
+            "disc":e.Discription,
+            "img":urrr[0],
+            # "urls":urrr,
+            # "inf":inf,
+            # "hig":hig,
+        }
+
+
+    return render(request, "astro/home.html", {"p":oo, "e":ooo })
 
 
 def about(request):

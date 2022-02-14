@@ -1,14 +1,12 @@
-{% extends 'base.html' %}
-{% block CSS %}
+{% extends 'base.html' %} {% block CSS %}
 <style>
     body {
-
         /* display: flex; */
         justify-content: center;
         align-items: center;
         min-height: 100vh;
     }
-
+    
     .carousel {
         width: 80vw;
         height: 400px;
@@ -18,11 +16,11 @@
         position: relative;
         box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
     }
-
+    
     .carousel:hover .controls {
         opacity: 1;
     }
-
+    
     .carousel .controls {
         opacity: 0;
         display: flex;
@@ -34,7 +32,7 @@
         z-index: 99999;
         transition: all ease 0.5s;
     }
-
+    
     .carousel .controls .control {
         margin: 0 5px;
         display: flex;
@@ -48,11 +46,11 @@
         transition: ease 0.3s;
         cursor: pointer;
     }
-
+    
     .carousel .controls .control:hover {
         opacity: 1;
     }
-
+    
     .carousel .slides {
         position: absolute;
         top: 50%;
@@ -62,32 +60,40 @@
         width: 100%;
         transition: 1s ease-in-out all;
     }
-
+    
     .carousel .slides .slide {
         min-width: 100%;
         min-height: 250px;
         height: auto;
     }
-
-
-    {% comment %}  {% endcomment %}
-    *{
+    
+    {
+        % comment %
+    }
+    
+    {
+        % endcomment %
+    }
+    
+    * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
         font-family: sans-serif;
     }
-    body{
+    
+    body {
         justify-content: center;
         background-color: #fafafa;
         margin: auto;
-
     }
-    h1{
+    
+    h1 {
         text-align: center;
         margin: 15px 0;
     }
-    .content{
+    
+    .content {
         width: 1000px;
         max-width: 800px;
         margin: auto;
@@ -95,74 +101,109 @@
         background: chartreuse;
         margin: 20px 0;
         background-color: #fff;
-         box-shadow: 0px 1px 2px rgba(50, 50, 50, .1), 
-            0px 2px 4px rgba(60, 60, 60, 0.1);
+        box-shadow: 0px 1px 2px rgba(50, 50, 50, .1), 0px 2px 4px rgba(60, 60, 60, 0.1);
         border-radius: 5px;
         padding: 30px;
     }
-    .content h2{
+    
+    .content h2 {
         font-weight: 800;
         margin: 10px 0;
     }
-    .content p{
+    
+    .content p {
         margin: 10px 0;
         color: rgb(82, 80, 80);
         font-size: 1.1rem;
     }
-    .content h4{
+    
+    .content h4 {
         font-weight: 90;
         margin: 15px 0;
         font-size: 15px;
     }
     
+    .content {
+        width: 90%;
+        max-width: 800px;
+        margin: auto;
+        /* height: 200px; */
+        background: chartreuse;
+        margin-top: 10px;
+        background-color: #fff;
+        box-shadow: 0px 1px 2px rgb(50 50 50 / 10%), 0px 2px 4px rgb(60 60 60 / 10%);
+        border-radius: 5px;
+        padding: 30px;
+    }
 </style>
 
 
-{% endblock CSS %}
+{% endblock CSS %} {% block body %}
 
-{% block body %}
+<main id="main">
+    <section class="breadcrumbs">
+        <div class="container">
 
-<div class="carousel">
-    <div class="slides">
-        {% for i in imgs %}
+            <div class="d-flex justify-content-between align-items-center">
+                <h2>Events</h2>
+                <ol>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/showevents">Events</a></li>
+                    <li>{{Name}}</li>
+                </ol>
+            </div>
 
-        <img src="{{i}}" alt="slide image" class="slide">
+        </div>
+    </section>
 
-        {% endfor %}
-    </div>
-    <div class="controls">
-        <div class="control prev-slide">&#9668;</div>
-        <div class="control next-slide">&#9658;</div>
-    </div>
-</div>
+    <section class="why-us section-bg" data-aos="fade-up" date-aos-delay="200">
+        <div class="container">
+    
+            <div class="row">
+                <div style="width: 90%;margin-top: 80px;" class="carousel">
+                    <div class="slides">
+                        {% for i in imgs %}
+    
+                        <img src="{{i}}" alt="slide image" class="slide"> {% endfor %}
+                    </div>
+                    <div class="controls">
+                        <div class="control prev-slide">&#9668;</div>
+                        <div class="control next-slide">&#9658;</div>
+                    </div>
+                </div>
+    
+                <div id="container">
+                    <br>
+                    <h1 style="font-weight: bolder; color: blue;">{{Name}}</h1>
+                    <div class="content">
+                        <p>{{Disc}}</p>
+                    </div>
+    
+                    <div class="content">
+                        <h2>Information</h2>
+                        {% for i in infs %}
+    
+    
+                        <p> &#8226; {{i}}</p>
+                        {% endfor %}
+    
+                    </div>
+    
+                    <div class="content">
+                        <h2>Highlights</h2>
+    
+                        {% for i in higs %}
+    
+    
+                        <p> &#8226; {{i}}</p>
+                        {% endfor %}
+                    </div>
+    
+                </div>
+            </div>
+    </section>
+</main>
 
-<div id="container">
-    <h1>{{Name}}</h1>
-    <div class="content">
-        <p>{{Disc}}</p>
-    </div>
-
-    <div class="content">
-        <h2>Information</h2>
-        {% for i in infs %}
-        
-        
-        <p> &#8226; {{i}}</p>
-            {% endfor %}
-
-    </div>
-
-    <div class="content">
-        <h2>Highlights</h2>
-
-         {% for i in higs %}
-        
-        
-         <p> &#8226; {{i}}</p>
-            {% endfor %}
-    </div>
-
-</div>
 
 
 <script>
@@ -185,21 +226,20 @@
     }
 
     let autoChange = setInterval(changeSlide, delay);
-    const restart = function () {
+    const restart = function() {
         clearInterval(autoChange);
         autoChange = setInterval(changeSlide, delay);
     };
 
     // Controls
-    document.querySelector(".next-slide").addEventListener("click", function () {
+    document.querySelector(".next-slide").addEventListener("click", function() {
         changeSlide();
         restart();
     });
 
-    document.querySelector(".prev-slide").addEventListener("click", function () {
+    document.querySelector(".prev-slide").addEventListener("click", function() {
         changeSlide(false);
         restart();
     });
-
 </script>
 {% endblock body %}

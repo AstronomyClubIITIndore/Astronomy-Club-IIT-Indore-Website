@@ -1,12 +1,33 @@
 {% extends 'base.html' %}
-
 {% block body %}
 
-<h1>{{Title}}</h1>
-{% autoescape off %}{{cnt}}{% endautoescape %}
+<main id="main">
+    <section class="breadcrumbs">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2>Blogs</h2>
+                <ol>
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    <li><a href="/blog">Blogs</a></li>
+                    <li>{{Title}}</li>
+                </ol>
+            </div>
+        </div>
+    </section>
 
+    <section class="why-us section-bg" data-aos="fade-up" date-aos-delay="200">
+        <div class="container">
 
+            <div class="row">
 
+                <h1>{{Title}}</h1>
 
+                {% autoescape off %}{{cnt}}{% endautoescape %}
+            </div>
+        </div>
+    </section>
+</main>
 
 {% endblock body %}

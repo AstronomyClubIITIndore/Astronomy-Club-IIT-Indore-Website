@@ -95,7 +95,7 @@
                             <img class="hihi img" src="{{e.img}}" alt="...">
                         </div>
                         <div class="card-body">
-                            <h5 class="card-title"><a href="#">{{e.name}}</a></h5>
+                            <h5 class="card-title"><a href="event{{e.id}}">{{e.name}}</a></h5>
                             <p class="hehe card-text">{{e.disc}}</p>
                             <div class="read-more"><a href="event{{e.id}}"><i class="bi bi-arrow-right"></i> Read More</a></div>
                             {% if user.is_authenticated %}

@@ -1,12 +1,14 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% block body %}
+<section style="margin-top: 20px;" class="why-us section-bg" data-aos="fade-up" date-aos-delay="200">
+    <div class="container">
 
-{% block body %}
+        <div class="row">
 
 <h1>{{Title}}</h1>
+
 {% autoescape off %}{{cnt}}{% endautoescape %}
-
-
-
-
+</div>
+</div>
+</section>
 
 {% endblock body %}

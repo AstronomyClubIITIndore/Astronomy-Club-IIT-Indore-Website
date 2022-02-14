@@ -1,59 +1,58 @@
-{% extends 'base.html' %}
-{% block body %}
-    <main id="main">
-        <!-- ======= Blog Section ======= -->
-        <section id="blog" class="blog">
-            <div  class="container" data-aos="fade-up">
-                <div class="row">
-                    <div class="col-lg-8 entries" style="margin: auto;">
-                        {% for b in bls %}
-                            <article class="entry">
-                                <div class="entry-img">
-                                    <img src="{{ b.img }}" class="" alt="...">
-                                </div>
-                                <h2 class="entry-title">
-                                    <a href="readblog{{ b.id }}">{{ b.Title }}</a>
-                                </h2>
-                                <div class="entry-meta">
-                                    <ul>
-                                        <li class="d-flex align-items-center">
-                                            <i class="bi bi-person"></i><a>John Doe</a>
-                                        </li>
-                                        <li class="d-flex align-items-center">
-                                            <i class="bi bi-clock"></i> <a><time datetime="2020-01-01">Jan 1, 2020</time></a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="entry-content">
-                                    <p>
-                                        {{ b.disc }}
-                                    </p>
-                                    <div class="read-more">
-                                        <a href="readblog{{ b.id }}">Read More</a>
-                                    </div>
-                                </div>
-                                {% if user.is_authenticated %}<a href="delblog{{ b.id }}" class="btn btn-danger">Delete</a>{% endif %}
-                            </article>
-                        {% endfor %}
-                        {% comment %} <div class="blog-pagination">
-                            <ul class="justify-content-center">
-                                <li>
-                                    <a href="#">1</a>
+{% extends 'base.html' %} {% block body %}
+<main id="main">
+    <!-- ======= Blog Section ======= -->
+    <section id="blog" class="blog">
+        <div class="container" data-aos="fade-up">
+            <div class="row">
+                <div class="col-lg-8 entries" style="margin: auto;">
+                    {% for b in bls %}
+                    <article class="entry">
+                        <div class="entry-img">
+                            <img src="{{ b.img }}" class="" alt="...">
+                        </div>
+                        <h2 class="entry-title">
+                            <a href="readblog{{ b.id }}">{{ b.Title }}</a>
+                        </h2>
+                        <div class="entry-meta">
+                            <ul>
+                                <li class="d-flex align-items-center">
+                                    <i class="bi bi-person"></i><a>John Doe</a>
                                 </li>
-                                <li class="active">
-                                    <a href="#">2</a>
-                                </li>
-                                <li>
-                                    <a href="#">3</a>
+                                <li class="d-flex align-items-center">
+                                    <i class="bi bi-clock"></i> <a><time datetime="2020-01-01">Jan 1, 2020</time></a>
                                 </li>
                             </ul>
-                        </div> {% endcomment %}
-                    </div>
-                    <!-- End blog entries list -->
+                        </div>
+                        <div class="entry-content">
+                            <p>
+                                {{ b.disc }}
+                            </p>
+                            <div class="read-more">
+                                <a href="readblog{{ b.id }}">Read More</a>
+                            </div>
+                        </div>
+                        {% if user.is_authenticated %}<a href="delblog{{ b.id }}" class="btn btn-danger">Delete</a>{% endif %}
+                    </article>
+                    {% endfor %} {% comment %}
+                    <div class="blog-pagination">
+                        <ul class="justify-content-center">
+                            <li>
+                                <a href="#">1</a>
+                            </li>
+                            <li class="active">
+                                <a href="#">2</a>
+                            </li>
+                            <li>
+                                <a href="#">3</a>
+                            </li>
+                        </ul>
+                    </div> {% endcomment %}
                 </div>
+                <!-- End blog entries list -->
             </div>
-        </section>
-        <!-- End Blog Section -->
-    </main>
-    <!-- End #main -->
+        </div>
+    </section>
+    <!-- End Blog Section -->
+</main>
+<!-- End #main -->
 {% endblock body %}

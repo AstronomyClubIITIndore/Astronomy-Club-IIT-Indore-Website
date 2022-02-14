@@ -46,7 +46,7 @@
                         <div class="portfolio-info">
                             <h3>Arts</h3>
                             <div>
-                                <a href="{{a.li}}" data-gallery="portfolioGallery" class="portfolio-lightbox" title="App 1"><i class="bx bx-plus"></i></a> {% if user.is_authenticated %}
+                                <a href="{{a.li}}" target="_blank" data-gallery="portfolioGallery" class="portfolio-lightbox" title="App 1"><i class="bx bx-plus"></i></a> {% if user.is_authenticated %}
                                 <a href="delphoto{{a.id}}" title="Portfolio Details"><i class="fa fa-trash"></i></a> {% endif %}
                             </div>
                         </div>
@@ -61,7 +61,7 @@
                         <div class="portfolio-info">
                             <h3>Clicks</h3>
                             <div>
-                                <a href="{{c.li}}" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Web 3"><i class="bx bx-plus"></i></a> {% if user.is_authenticated %}
+                                <a href="{{c.li}}" target="_blank" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Web 3"><i class="bx bx-plus"></i></a> {% if user.is_authenticated %}
                                 <a href="delphoto{{c.id}}" title="Portfolio Details"><i class="fa fa-trash"></i></a> {% endif %}
                             </div>
                         </div>

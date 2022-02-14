@@ -1,7 +1,7 @@
 {% extends 'base.html' %} {% block body %} {% comment %} {% for p in pp %}
 
 <div class="card" style="width: 18rem;">
-    <a style="text-decoration: none;" href="{{p.Link}}">
+    <a style="text-decoration: none;" target="_blank" href="{{p.Link}}">
         <img src="{{p.Thumbnail_link}}" class="card-img-top" alt="...">
         <div class="card-body">
             <h5 class="card-title">{{p.Name}}</h5>

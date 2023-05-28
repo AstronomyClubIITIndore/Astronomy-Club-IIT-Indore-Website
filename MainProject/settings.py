@@ -16,7 +16,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 import os
 # import environ
 import dotenv
-dotenv.read_dotenv()
+dotenv.load_dotenv()
 
 from pathlib import Path
 
